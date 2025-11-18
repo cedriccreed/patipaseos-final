@@ -1,0 +1,206 @@
+{% extends "app_mascotas/base.html" %}
+{% load static %}
+{% block title %}PatiPaseos - Inicio{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for msg in messages %}
+        <script>
+            Swal.fire({
+                title: 'Exito!',
+                text: '{{msg}}',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'Green'
+            }) 
+        </script>
+    {% endfor %}
+{% endif %}
+
+<!-- ============================================
+     NAVBAR ESPECÍFICA PARA PÁGINA DE INICIO (NO AUTENTICADOS)
+     ============================================ -->
+{% if not user.is_authenticated %}
+<nav class="navbar navbar-expand-lg home-navbar">
+  <div class="container">
+    <!-- Logo a la izquierda -->
+    <a class="navbar-brand" href="{% url 'index' %}">
+      <img src="{% static 'app_mascotas/img/patipaseospng.png' %}" alt="Logo PatiPaseos" class="img-fluid">
+    </a>
+    
+    <!-- Botón hamburguesa para móviles -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNav" aria-controls="homeNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- Menú de navegación centrado -->
+    <div class="collapse navbar-collapse" id="homeNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">
+            <i class="fas fa-home"></i> Inicio
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'registro' %}">
+            <i class="fas fa-user-plus"></i> Regístrate
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login_custom' %}">
+            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endif %}
+
+<!-- ============================================
+     SECCIÓN DE SERVICIOS (SOLO SI HAY SERVICIOS)
+     ============================================ -->
+{% if obtener %}
+<div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4"><strong>Publicación de servicios</strong></h2>
+    
+    <div class="row">
+        {% for servicio in obtener %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card text-center h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">{{ servicio.tipo_servicio }}</h5>
+                        <h4 class="mb-0">${{ servicio.precio }}</h4>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-3">
+                            <div class="rounded-circle overflow-hidden mx-auto" style="width: 100px; height: 100px;">
+                                {% if servicio.cuidador.propietario.imagen %}
+                                    <img src="{{ servicio.cuidador.propietario.imagen.url }}" class="w-100 h-100" alt="User-Profile-Image" style="object-fit: cover;">
+                                {% else %}
+                                    <img src="{% static 'app_mascotas/img/no_avatar.jpg' %}" class="w-100 h-100" alt="User-Profile-Image" style="object-fit: cover;">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p class="card-text flex-grow-1">{{ servicio.descripcion }}</p>
+                    </div>
+                    <div class="card-footer">
+                        {% if servicio.cuidador.propietario == user %}
+                            <a href="{% url 'perfil' %}" class="btn btn-lg btn-primary btn-block">Ver Detalles</a>
+                        {% else %}
+                            <a href="{% url 'perfil_servicio' servicio.cuidador.propietario.username %}" class="btn btn-lg btn-primary btn-block">Ver Detalles</a>
+                        {% endif %}
+                        <p class="card-text mt-2 mb-0"><small class="text-muted">Publicado por: {{ servicio.cuidador.propietario.username }}</small></p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Paginación -->
+    {% if obtener.has_other_pages %}
+        <div class="d-flex justify-content-center mt-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if obtener.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo;&laquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ obtener.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo;</a>
+                        </li>
+                    {% endif %}
+
+                    {% for page_number in obtener.paginator.page_range %}
+                        {% if obtener.number == page_number %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ page_number }}</span>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ page_number }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if obtener.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ obtener.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&raquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ obtener.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&raquo;&raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    {% endif %}
+</div>
+{% else %}
+<div class="container mt-5 mb-5">
+    <div class="alert alert-info text-center">
+        <h4>No se encontraron servicios</h4>
+        <p>Intenta buscar con otros términos o revisa más tarde.</p>
+    </div>
+</div>
+{% endif %}
+
+<!-- ============================================
+     SECCIÓN DE CARACTERÍSTICAS
+     ============================================ -->
+<div class="container mt-5 text-center">
+    <!-- Título animado -->
+    <h1 class="animate__animated animate__fadeInDown" style="color: #808080;">PATIPASEO TE OFRECE</h1>
+    <h2 class="animate__animated animate__fadeInDown" style="color: #808080; font-size: 1.5rem;">RAZONES PRINCIPALES</h2>
+    <div class="row">
+  
+      <!-- Sección: Personas verificadas -->
+      <div class="col-md-6">
+        <div class="section-container animate__animated animate__fadeInUp rounded p-4" style="color: #3498db; border: 2px solid rgb(128, 128, 128); background: rgba(255, 255, 255, 0.8); transition: background 0.3s;">
+          <i class="fas fa-check-circle fa-3x" style="color: rgb(75, 0, 130);"></i>
+          <h2 style="color: black;">Personas verificadas</h2>
+          <p style="color: black;">Todas las personas que ofrecen servicio de cuidado o paseo han pasado por un proceso de verificación.</p>
+        </div>
+      </div>
+  
+      <!-- Sección: Garantía veterinaria -->
+      <div class="col-md-6">
+        <div class="section-container animate__animated animate__fadeInUp rounded p-4" style="color: #2ecc71; border: 2px solid rgb(128, 128, 128); background: rgba(255, 255, 255, 0.8); transition: background 0.3s;">
+          <i class="fas fa-medkit fa-3x" style="color: rgb(0, 0, 128);"></i>
+          <h2 style="color: black;">Garantía veterinaria</h2>
+          <p style="color: black;">Todos los perros durante el servicio Duko cuentan con garantía veterinaria limitada en caso de alguna emergencia.</p>
+        </div>
+      </div>
+  
+      <!-- Sección: Perros felices -->
+      <div class="col-md-6 mt-4">
+        <div class="section-container animate__animated animate__fadeInUp rounded p-4" style="color: #e74c3c; border: 2px solid rgb(128, 128, 128); background: rgba(255, 255, 255, 0.8); transition: background 0.3s;">
+          <i class="fas fa-paw fa-3x" style="color: rgb(128, 0, 128);"></i>
+          <h2 style="color: black;">Perros felices</h2>
+          <p style="color: black;">Tu perro nunca será enjaulado cuando se quede a dormir y estará bien cuidado. Durante los paseos vamos a su ritmo para que lo disfrute.</p>
+        </div>
+      </div>
+  
+      <!-- Sección: Seguimiento -->
+      <div class="col-md-6 mt-4">
+        <div class="section-container animate__animated animate__fadeInUp rounded p-4" style="color: #f39c12; border: 2px solid rgb(128, 128, 128); background: rgba(255, 255, 255, 0.8); transition: background 0.3s;">
+          <i class="fas fa-chart-line fa-3x" style="color: rgb(0, 0, 128);"></i>
+          <h2 style="color: black;">Seguimiento</h2>
+          <p style="color: black;">Podrás consultar y dar seguimiento de cada paseo o cuidado que se realice a través de la App o portal de seguimiento.</p>
+        </div>
+      </div>
+  
+      <!-- Agrega un contenedor para los íconos animados -->
+      <div class="col-md-12 mt-4">
+        <div class="icon-container animate__animated animate__bounceIn" style="color: #8e44ad;">
+          <i class="fas fa-dog fa-5x animate__animated animate__hover__rubberBand" style="color: rgb(75, 0, 130); margin-right: 20px;"></i>
+          <i class="fas fa-paw fa-5x animate__animated animate__hover__rubberBand" style="color: rgb(128, 0, 128);"></i>
+          <i class="fas fa-cat fa-5x animate__animated animate__hover__rubberBand" style="color: rgb(0, 0, 128); margin-left: 20px;"></i>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+
+{% endblock %}

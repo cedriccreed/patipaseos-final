@@ -1,0 +1,732 @@
+/**
+ * ============================================
+ * ESTILOS PERSONALIZADOS - PATIPASEOS
+ * ============================================
+ * 
+ * Este archivo contiene todos los estilos CSS personalizados
+ * para la aplicación PatiPaseos.
+ * 
+ * Organización:
+ * 1. Variables y configuración global
+ * 2. Estilos del header/navbar
+ * 3. Estilos del contenido principal
+ * 4. Estilos del carrusel
+ * 5. Estilos de tarjetas y componentes
+ * 6. Estilos de botones
+ * 7. Estilos del footer
+ * 8. Utilidades y clases auxiliares
+ * 
+ * @author Cedric Lavin - Desarrollador Frontend
+ * @version 1.0
+ */
+
+/* ============================================
+   VARIABLES Y CONFIGURACIÓN GLOBAL
+   ============================================ */
+
+/* Variables de color principales (para fácil mantenimiento) */
+:root {
+    --color-primary: #007bff;        /* Azul principal */
+    --color-secondary: #6c757d;      /* Gris secundario */
+    --color-success: #28a745;        /* Verde éxito */
+    --color-danger: #dc3545;         /* Rojo peligro/eliminar */
+    --color-warning: #ffc107;        /* Amarillo advertencia */
+    --color-info: #17a2b8;          /* Azul información */
+    --color-dark: #343a40;          /* Oscuro */
+    --color-light: #f8f9fa;         /* Claro */
+    
+    /* Colores personalizados del proyecto */
+    --color-mascota-primary: #4a148c;    /* Morado oscuro (iconos principales) */
+    --color-mascota-secondary: #800080;  /* Morado medio */
+    --color-mascota-accent: #000080;     /* Azul oscuro (accesorios) */
+    --color-border: #808080;             /* Gris para bordes */
+    
+    /* Espaciado estándar */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 40px;
+    
+    /* Bordes redondeados */
+    --border-radius-sm: 5px;
+    --border-radius-md: 10px;
+    --border-radius-lg: 20px;
+    
+    /* Transiciones */
+    --transition-fast: 0.2s;
+    --transition-normal: 0.3s;
+    --transition-slow: 0.5s;
+}
+
+/* Reset y estilos base */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Eliminar estilos predeterminados de listas */
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* ============================================
+   HEADER Y NAVEGACIÓN
+   ============================================ */
+
+/* Estilos del encabezado principal */
+header {
+    background-color: var(--color-dark);
+    color: #fff;
+    position: relative;
+    padding: 0 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Estilos para el navbar de Bootstrap */
+.navbar {
+    margin-bottom: 0;
+    padding: 0.5rem 1rem;
+}
+
+/* Estilos para los enlaces del menú de navegación */
+.navbar-nav .nav-item .nav-link {
+    color: #ffffff;
+    transition: color var(--transition-normal);
+    padding: 0.5rem 1rem;
+}
+
+/* Efecto hover en los enlaces del menú */
+.navbar-nav .nav-item .nav-link:hover {
+    color: var(--color-light);
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-sm);
+}
+
+/* Estilos para el logo/brand en el navbar */
+.navbar-brand h1 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: color var(--transition-normal);
+    text-decoration: none;
+    margin: 0;
+}
+
+/* Efecto hover en el logo */
+.navbar-brand:hover h1 {
+    color: var(--color-light);
+    text-decoration: none;
+}
+
+/* ============================================
+   NAVBAR HOME (Estilo de página de inicio)
+   ============================================ */
+
+/* Animación RGB para gradientes */
+@keyframes rgbGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Navbar específica para página de inicio con efecto RGB */
+.home-navbar {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(135, 206, 250, 0.15) 50%, rgba(255, 255, 255, 0.95) 100%);
+    background-size: 200% 200%;
+    backdrop-filter: blur(10px);
+    padding: 15px 0;
+    position: relative;
+    z-index: 1000;
+    border-bottom: none !important;
+    animation: rgbGradient 5s ease infinite;
+}
+
+.home-navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; /* No se encoge */
+}
+
+.home-navbar .navbar-brand img {
+    width: 100px;
+    height: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(135, 206, 250, 0.5));
+}
+
+.home-navbar .navbar-brand img:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px rgba(135, 206, 250, 0.8));
+}
+
+/* Contenedor del navbar con flexbox para centrar opciones */
+.home-navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Menú de navegación centrado - usando posición absoluta para centrado perfecto */
+.home-navbar .navbar-collapse {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+}
+
+.home-navbar .navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* En móviles, el menú vuelve a su posición normal */
+@media (max-width: 991px) {
+    .home-navbar .navbar-collapse {
+        position: static;
+        transform: none;
+        width: 100%;
+        margin-top: 15px;
+    }
+    
+    .home-navbar .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+.home-navbar .nav-link {
+    color: #2c3e50 !important;
+    font-weight: 500;
+    padding: 8px 20px !important;
+    transition: color 0.3s ease;
+    margin: 0 5px;
+    border: none;
+    background: transparent;
+}
+
+.home-navbar .nav-link:hover {
+    color: #87cefa !important;
+    background: transparent;
+    border: none;
+}
+
+/* Botón hamburguesa para home-navbar */
+.home-navbar .navbar-toggler {
+    border-color: rgba(44, 62, 80, 0.3);
+}
+
+.home-navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(44, 62, 80, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* ============================================
+   CONTENIDO PRINCIPAL
+   ============================================ */
+
+/* Contenedor principal del contenido */
+.contenido-principal {
+    text-align: center;
+    margin-top: 0;
+    padding-top: var(--spacing-md);
+    position: relative;
+    min-height: calc(100vh - 200px); /* Altura mínima menos header y footer */
+}
+
+/* Ajuste cuando no hay navbar (páginas de login/registro) */
+body:not(:has(header)) .contenido-principal {
+    padding-top: 0;
+}
+
+/* Títulos dentro del contenido principal */
+.contenido-principal h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: var(--spacing-md);
+}
+
+.contenido-principal h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Párrafos dentro del contenido principal */
+.contenido-principal p {
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+/* Wrapper para contenido con footer sticky */
+#content-wrap {
+    padding-bottom: 2.5rem; /* Espacio para el footer */
+}
+
+/* ============================================
+   CARRUSEL (SLIDER DE IMÁGENES)
+   ============================================ */
+
+/* Contenedor principal del carrusel */
+#carouselExample {
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    margin: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Contenedor interno del carrusel */
+.carousel-inner {
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+}
+
+/* Imágenes dentro del carrusel */
+.carousel-inner img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;              /* Escala la imagen para cubrir sin distorsionar */
+    object-position: center center; /* Centra la imagen */
+    border-radius: var(--border-radius-lg);
+}
+
+/* Cada slide del carrusel */
+.carousel-item {
+    border-radius: var(--border-radius-lg);
+}
+
+/* Espaciado general del carrusel */
+.carousel {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Clase personalizada para ajustar tamaño de imágenes */
+.custom-image-size {
+    max-width: 100%;
+    max-height: 600px;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Caja de texto sobre el slider (si se usa) */
+.slider-box {
+    background-color: rgba(88, 88, 88, 0.26);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+    margin-top: var(--spacing-md);
+}
+
+.slider-box h2 {
+    margin-bottom: var(--spacing-md);
+}
+
+/* ============================================
+   TARJETAS Y COMPONENTES
+   ============================================ */
+
+/* Efecto hover en tarjetas (cards) */
+.card {
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Efecto hover: aumenta ligeramente el tamaño y agrega sombra */
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Contenedor de secciones con animación */
+.section-container {
+    transition: background-color var(--transition-normal), transform var(--transition-fast);
+    border: 2px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.9);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Efecto hover en contenedores de sección */
+.section-container:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Contenedor de iconos animados */
+.icon-container {
+    text-align: center;
+    padding: var(--spacing-lg) 0;
+}
+
+/* ============================================
+   BOTONES PERSONALIZADOS
+   ============================================ */
+
+/* Botones primarios y secundarios con bordes redondeados */
+.btn-primary,
+.btn-secondary {
+    border-radius: var(--border-radius-lg);
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+}
+
+/* Botón personalizado genérico */
+.my-custom-button {
+    background-color: var(--color-danger);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius-md);
+    transition: background-color var(--transition-normal);
+    cursor: pointer;
+}
+
+.my-custom-button:hover {
+    background-color: #c82333;
+    color: white;
+}
+
+/* Botón de eliminar personalizado */
+.my-custom-delete-button {
+    background-color: var(--color-danger);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius-md);
+    transition: background-color var(--transition-normal);
+    cursor: pointer;
+}
+
+.my-custom-delete-button:hover {
+    background-color: #c82333;
+    color: white;
+}
+
+/* ============================================
+   DROPDOWN MENUS
+   ============================================ */
+
+/* Botón del dropdown */
+.dropbtn {
+    background-color: rgb(214, 1, 1);
+    color: rgb(0, 0, 0);
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--border-radius-sm);
+    transition: background-color var(--transition-normal);
+}
+
+/* Efecto hover y focus en botón dropdown */
+.dropbtn:hover,
+.dropbtn:focus {
+    background-color: #000000;
+    color: white;
+}
+
+/* Contenedor del dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Contenido del dropdown (oculto por defecto) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+}
+
+/* Enlaces dentro del dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color var(--transition-fast);
+}
+
+/* Efecto hover en enlaces del dropdown */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Clase para mostrar el dropdown (agregar con JavaScript) */
+.show {
+    display: block;
+}
+
+/* Items del dropdown de Bootstrap */
+.dropdown-item {
+    color: black;
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.dropdown-item:hover {
+    color: var(--color-danger);
+    background-color: #f8f9fa;
+}
+
+.dropdown-item:active {
+    color: black;
+    background-color: #e9ecef;
+}
+
+/* ============================================
+   FOOTER CON EFECTO RGB (Plomo, Negro y Blanco)
+   ============================================ */
+
+/* Animación RGB para el footer */
+@keyframes footerRgbGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes footerRgbBorder {
+    0% {
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 40px rgba(128, 128, 128, 0.1);
+    }
+    33% {
+        border-color: rgba(128, 128, 128, 0.5);
+        box-shadow: 0 0 20px rgba(128, 128, 128, 0.3), 0 0 40px rgba(0, 0, 0, 0.2);
+    }
+    66% {
+        border-color: rgba(0, 0, 0, 0.8);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(128, 128, 128, 0.2);
+    }
+    100% {
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 40px rgba(128, 128, 128, 0.1);
+    }
+}
+
+/* Footer principal con efecto RGB */
+footer {
+    text-align: center;
+    padding: var(--spacing-md) 0;
+    background: linear-gradient(135deg, #000000 0%, #2c2c2c 25%, #4a4a4a 50%, #2c2c2c 75%, #000000 100%);
+    background-size: 200% 200%;
+    color: white;
+    width: 100%;
+    margin-top: auto;
+    position: relative;
+    z-index: 10;
+    clear: both;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    animation: footerRgbGradient 6s ease infinite, footerRgbBorder 4s ease infinite;
+}
+
+/* Lista de enlaces sociales */
+.social-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Items de la lista social */
+.social-links li {
+    margin: 0 var(--spacing-sm);
+}
+
+/* Enlaces sociales con efecto RGB */
+.social-links a {
+    color: white;
+    text-decoration: none;
+    transition: transform var(--transition-normal), color var(--transition-normal), filter var(--transition-normal);
+    display: inline-block;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+/* Efecto hover en iconos sociales con RGB */
+.social-links a:hover {
+    color: #ffffff;
+    transform: scale(1.3);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 25px rgba(128, 128, 128, 0.5));
+    animation: footerRgbBorder 2s ease infinite;
+}
+
+/* Texto de copyright con efecto RGB - Sin línea divisoria */
+.footer-copyright {
+    margin-top: 0 !important;
+    padding-top: 15px !important;
+    border-top: none !important;
+    border: none !important;
+}
+
+.footer-copyright .container {
+    border-top: none !important;
+    border: none !important;
+}
+
+.footer-copyright .row {
+    border-top: none !important;
+    border: none !important;
+}
+
+.footer-copyright .col-sm-12 {
+    border-top: none !important;
+    border: none !important;
+}
+
+.footer-copyright-txt {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 50%, #ffffff 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: footerRgbGradient 5s ease infinite;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Texto de redes sociales - Misma tipografía que el resto */
+.social-links-txt {
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+/* ============================================
+   PANEL DE CLIENTE (si se usa)
+   ============================================ */
+
+/* Enlaces del panel de cliente */
+#panel-cliente ul li a {
+    color: white;
+    margin-top: 1px;
+    background-color: #000000;
+    padding: 0.5rem 1rem;
+    display: block;
+    transition: background-color var(--transition-normal);
+}
+
+/* Efecto hover en enlaces del panel */
+#panel-cliente ul li a:hover {
+    background-color: #d80707;
+    text-decoration: none;
+}
+
+/* ============================================
+   UTILIDADES Y CLASES AUXILIARES
+   ============================================ */
+
+/* Clase para opciones de lista (usada en index.html) */
+.options-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.options-list-item {
+    border: 1px solid var(--color-border);
+    margin-right: var(--spacing-sm);
+    transition: border-color var(--transition-normal), transform var(--transition-normal);
+    border-radius: var(--border-radius-sm);
+    padding: 0.25rem 0.5rem;
+}
+
+.options-list-item:hover {
+    border-color: #000;
+    transform: scale(1.05);
+}
+
+/* Clase auxiliar para color personalizado */
+.c {
+    background-color: rgb(178, 29, 29);
+    color: rgb(255, 255, 255);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Ajustes para tablets */
+@media (max-width: 768px) {
+    .contenido-principal h1 {
+        font-size: 2rem;
+    }
+    
+    .contenido-principal h2 {
+        font-size: 1.25rem;
+    }
+    
+    #carouselExample {
+        max-width: 100%;
+        margin: 0 var(--spacing-sm);
+    }
+}
+
+/* Ajustes para móviles */
+@media (max-width: 576px) {
+    header {
+        padding: 0 1rem;
+    }
+    
+    .navbar-brand h1 {
+        font-size: 1.25rem;
+    }
+    
+    .contenido-principal {
+        padding: var(--spacing-sm);
+    }
+    
+    .section-container {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .social-links {
+        flex-direction: column;
+    }
+    
+    .social-links li {
+        margin: var(--spacing-xs) 0;
+    }
+}
+
+/* ============================================
+   FIN DEL ARCHIVO
+   ============================================ */

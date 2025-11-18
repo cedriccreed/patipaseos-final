@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PatiPaseos - Plataforma para conectar propietarios de mascotas con cuidadores profesionales">
+    
+    <!-- ============================================
+         HOJAS DE ESTILO EXTERNAS (CDN)
+         ============================================ -->
+    
+    <!-- Bootstrap 4.5.2 CSS - Framework CSS principal para diseño responsive -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Font Awesome 5.15.3 - Librería de iconos vectoriales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <!-- Animate.css 4.1.1 - Librería de animaciones CSS predefinidas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- DateRangePicker CSS - Estilos para el selector de rangos de fechas -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    
+    <!-- Hoja de estilos personalizada del proyecto -->
+    <link rel="stylesheet" href="{% static 'app_mascotas/css/estilo.css' %}">
+    
+    <!-- Título de la página (puede ser sobrescrito en templates hijos) -->
+    <title>{% block title %}PatiPaseos - Cuidadores Profesionales para Mascotas{% endblock %}</title>
+</head>
+
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+    <!-- ============================================
+         HEADER Y NAVEGACIÓN
+         ============================================ -->
+    <!-- Navbar solo se muestra si el usuario está autenticado -->
+    <!-- Para usuarios no autenticados, cada página tiene su propio navbar -->
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg home-navbar">
+      <div class="container">
+        <!-- Logo a la izquierda -->
+        <a class="navbar-brand" href="{% url 'index' %}">
+          <img src="{% static 'app_mascotas/img/patipaseospng.png' %}" alt="Logo PatiPaseos" class="img-fluid">
+        </a>
+        
+        <!-- Botón hamburguesa para móviles -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarAuth" aria-controls="navbarAuth" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Menú de navegación centrado -->
+        <div class="collapse navbar-collapse" id="navbarAuth">
+          <ul class="navbar-nav">
+            <!-- Opción para convertirse en cuidador (solo si no es cuidador) -->
+            {% if not user.es_cuidador %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'cuidador' %}">
+                <i class="fas fa-user-plus"></i> ¿Quieres convertirte en cuidador?
+              </a>
+            </li>
+            {% endif %}
+            
+            <!-- Si es cuidador, mostrar opciones adicionales -->
+            {% if user.es_cuidador %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'servicio' %}">
+                <i class="fas fa-plus-circle"></i> Publicar servicio
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'prestacion_cuidador' %}">
+                <i class="fas fa-tasks"></i> Mis prestaciones
+              </a>
+            </li>
+            {% endif %}
+            
+            <!-- Solicitudes para no cuidadores -->
+            {% if not user.es_cuidador %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'prestacion' %}">
+                <i class="fas fa-list"></i> Mis solicitudes
+              </a>
+            </li>
+            {% endif %}
+            
+            <!-- Enlace a mensajes -->
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'inbox' %}">
+                <i class="fas fa-envelope"></i> Mensajes
+              </a>
+            </li>
+            
+            <!-- Enlace al perfil del usuario -->
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'perfil' %}">
+                <i class="fas fa-user"></i> Editar mi perfil
+              </a>
+            </li>
+            
+            <!-- Botón para cerrar sesión (con confirmación JavaScript) -->
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="confirmLogout(); return false;">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endif %}
+
+    <!-- ============================================
+         CONTENIDO PRINCIPAL
+         ============================================ -->
+    <!-- Bloque de contenido que será sobrescrito por templates hijos -->
+    <main class="contenido-principal" style="flex: 1;">
+        {% block content %}
+        <!-- El contenido específico de cada página se inserta aquí -->
+        {% endblock %}
+    </main>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer mt-auto py-3 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <!-- Sección de redes sociales -->
+                    <span class="social-links-txt mb-3 d-block">¡Síguenos en nuestras redes sociales!</span>
+                    <ul class="social-links list-inline">
+                        <!-- Enlace a Facebook -->
+                        <li class="list-inline-item">
+                            <a href="http://www.facebook.com/tu_pagina" class="text-white mx-2" target="_blank" 
+                               aria-label="Síguenos en Facebook">
+                                <i class="fab fa-facebook fa-2x"></i>
+                            </a>
+                        </li>
+                        <!-- Enlace a Instagram -->
+                        <li class="list-inline-item">
+                            <a href="http://www.instagram.com/tu_pagina" class="text-white mx-2" target="_blank"
+                               aria-label="Síguenos en Instagram">
+                                <i class="fab fa-instagram fa-2x"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Copyright -->
+        <div class="footer-copyright text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="footer-copyright-txt">
+                            © 2024-2025 PatiPaseos. Todos los derechos reservados.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         SCRIPTS JAVASCRIPT (CDN)
+         IMPORTANTE: Orden de carga es crítico
+         ============================================ -->
+    
+    <!-- jQuery 3.6.0 - Librería JavaScript base (requerida por Bootstrap y otros plugins) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Popper.js 1.16.0 - Requerido por Bootstrap para tooltips y popovers -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
+    <!-- Bootstrap 4.5.2 JS - Funcionalidades JavaScript de Bootstrap (modales, dropdowns, etc.) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Moment.js - Librería para manejo y formateo de fechas -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    
+    <!-- DateRangePicker - Plugin para selección de rangos de fechas -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    
+    <!-- Chart.js - Librería para crear gráficos y visualizaciones de datos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- SweetAlert2 - Librería para alertas y modales modernos y personalizables -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!-- ============================================
+         SCRIPTS PERSONALIZADOS
+         ============================================ -->
+    <script>
+        /**
+         * Función para confirmar el cierre de sesión
+         * Muestra un modal de confirmación usando SweetAlert2 antes de cerrar sesión
+         * 
+         * @function confirmLogout
+         * @description Solicita confirmación al usuario antes de cerrar sesión
+         */
+        function confirmLogout() {
+            // Muestra un modal de confirmación con SweetAlert2
+            Swal.fire({
+                title: '¿Cerrar Sesión?',           // Título del modal
+                text: '¿Estás seguro de que deseas cerrar sesión?',  // Mensaje de confirmación
+                icon: 'question',                    // Icono de pregunta
+                showCancelButton: true,              // Muestra botón de cancelar
+                confirmButtonText: 'Sí, cerrar sesión',  // Texto del botón de confirmación
+                cancelButtonText: 'Cancelar',        // Texto del botón de cancelar
+                confirmButtonColor: '#dc3545',       // Color rojo para el botón de confirmación
+                cancelButtonColor: '#6c757d',        // Color gris para el botón de cancelar
+                reverseButtons: true                 // Invierte el orden de los botones (cancelar a la izquierda)
+            }).then(function (result) {
+                // Si el usuario confirma, redirige a la URL de logout
+                if (result.isConfirmed) {
+                    window.location.href = "{% url 'logout_custom' %}";
+                }
+                // Si cancela, no hace nada y el modal se cierra automáticamente
+            });
+        }
+    </script>
+    
+    <!-- Bloque para scripts adicionales que pueden ser agregados en templates hijos -->
+    {% block extra_scripts %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,628 @@
+{% extends 'app_mascotas/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Registro - PatiPaseos{% endblock %}
+
+{% block content %}
+
+<!-- ============================================
+     ESTILOS MODERNOS Y LIMPIOS PARA REGISTRO
+     ============================================ -->
+<style>
+  /**
+   * Diseño moderno, limpio y consistente
+   * Inputs del mismo tamaño que login, pero formulario más amplio
+   */
+  
+  /* Fondo de la página con imagen y overlay - IGUAL QUE LOGIN */
+  body {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url("{% static 'app_mascotas/img/no_avatar.jpg' %}") fixed center;
+    background-size: cover;
+    margin: 0;
+    min-height: 100vh;
+    padding-bottom: 0;
+  }
+  
+  /* Contenedor principal - CENTRADO PERFECTO */
+  .contenido-principal {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Wrapper del formulario - CENTRADO VERTICAL Y HORIZONTAL */
+  .register-page-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    min-height: calc(100vh - 200px);
+  }
+
+  /* Contenedor más amplio para acomodar dos columnas cómodamente */
+  .register-container {
+    width: 100%;
+    max-width: 700px; /* Más amplio que login para dos columnas */
+  }
+
+  /* Tarjeta del formulario - DISEÑO MODERNO Y LIMPIO */
+  .register-form {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 50px 45px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease-out;
+    width: 100%;
+    backdrop-filter: blur(10px);
+  }
+
+  /* Animación de entrada */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Título del formulario */
+  .register-form h1 {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 35px;
+    font-weight: bold;
+    font-size: 2rem;
+  }
+
+  /* Icono del título */
+  .register-icon {
+    font-size: 3rem;
+    color: #3498db;
+    margin-bottom: 15px;
+    display: block;
+    text-align: center;
+  }
+
+  /* Labels mejorados */
+  .register-form label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    display: block;
+  }
+
+  /* INPUTS - EXACTAMENTE EL MISMO TAMAÑO QUE LOGIN */
+  /* Cada input individual tiene el mismo tamaño que login */
+  .register-form input[type="text"],
+  .register-form input[type="email"],
+  .register-form input[type="password"],
+  .register-form input[type="tel"],
+  .register-form .form-control,
+  .register-form input,
+  .register-form #id_username,
+  .register-form #id_first_name,
+  .register-form #id_last_name,
+  .register-form #id_email,
+  .register-form #id_rut,
+  .register-form #id_direccion,
+  .register-form #id_telefono,
+  .register-form #id_password1,
+  .register-form #id_password2 {
+    border-radius: 10px;
+    padding: 14px 18px; /* EXACTAMENTE IGUAL QUE LOGIN */
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
+    background: #fafafa;
+    font-size: 1rem; /* EXACTAMENTE IGUAL QUE LOGIN */
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    font-family: inherit;
+    display: block;
+    height: auto;
+    line-height: 1.5;
+  }
+
+  .register-form input[type="text"]:focus,
+  .register-form input[type="email"]:focus,
+  .register-form input[type="password"]:focus,
+  .register-form input[type="tel"]:focus,
+  .register-form .form-control:focus,
+  .register-form input:focus,
+  .register-form #id_username:focus,
+  .register-form #id_first_name:focus,
+  .register-form #id_last_name:focus,
+  .register-form #id_email:focus,
+  .register-form #id_rut:focus,
+  .register-form #id_direccion:focus,
+  .register-form #id_telefono:focus,
+  .register-form #id_password1:focus,
+  .register-form #id_password2:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15);
+    background: white;
+    outline: none;
+    transform: translateY(-2px);
+  }
+
+  .register-form input[type="text"]:hover:not(:focus),
+  .register-form input[type="email"]:hover:not(:focus),
+  .register-form input[type="password"]:hover:not(:focus),
+  .register-form input[type="tel"]:hover:not(:focus),
+  .register-form .form-control:hover:not(:focus),
+  .register-form input:hover:not(:focus),
+  .register-form #id_username:hover:not(:focus),
+  .register-form #id_first_name:hover:not(:focus),
+  .register-form #id_last_name:hover:not(:focus),
+  .register-form #id_email:hover:not(:focus),
+  .register-form #id_rut:hover:not(:focus),
+  .register-form #id_direccion:hover:not(:focus),
+  .register-form #id_telefono:hover:not(:focus),
+  .register-form #id_password1:hover:not(:focus),
+  .register-form #id_password2:hover:not(:focus) {
+    border-color: #b0b0b0;
+    background: #f5f5f5;
+  }
+
+  /* Inputs con error */
+  .register-form input.is-invalid,
+  .register-form .form-control.is-invalid,
+  .register-form input[type="text"].is-invalid,
+  .register-form input[type="email"].is-invalid,
+  .register-form input[type="password"].is-invalid {
+    border-color: #dc3545 !important;
+    background: #fff5f5 !important;
+  }
+
+  .register-form input.is-invalid:focus,
+  .register-form .form-control.is-invalid:focus,
+  .register-form input[type="text"].is-invalid:focus,
+  .register-form input[type="email"].is-invalid:focus,
+  .register-form input[type="password"].is-invalid:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15) !important;
+  }
+
+  /* Mensajes de error mejorados */
+  .register-form .invalid-feedback {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.875rem;
+    color: #dc3545;
+    font-weight: 500;
+  }
+
+  /* Help text para contraseñas */
+  .register-form .form-text {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: 8px;
+    line-height: 1.5;
+    padding-left: 5px;
+  }
+
+  .register-form .form-text ul {
+    margin-top: 5px;
+    padding-left: 20px;
+    margin-bottom: 0;
+  }
+
+  .register-form .form-text li {
+    margin-bottom: 3px;
+  }
+
+  /* Botón de registro - CONSISTENTE CON LOGIN */
+  .register-btn {
+    background-color: #28a745;
+    border: 1px solid #28a745;
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  .register-btn:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+  }
+
+  .register-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Enlace para iniciar sesión */
+  .login-link {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid #dee2e6;
+  }
+
+  .login-link p {
+    color: #6c757d;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .login-link a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .login-link a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+  }
+
+  /* Botón para volver a inicio */
+  .btn-back-home {
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: 2px solid #dee2e6;
+    background: white;
+    font-size: 0.95rem;
+  }
+
+  .btn-back-home:hover {
+    color: #3498db;
+    border-color: #3498db;
+    background: #f8f9fa;
+    text-decoration: none;
+    transform: translateX(-3px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .btn-back-home i {
+    margin-right: 5px;
+  }
+
+  /* Contenedor para campo de contraseña con botón de ojo DENTRO del input */
+  .password-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Input de contraseña con espacio para el ojo */
+  .password-wrapper input[type="password"],
+  .password-wrapper input[type="text"],
+  .password-wrapper .form-control,
+  .password-wrapper #id_password1,
+  .password-wrapper #id_password2 {
+    padding-right: 50px !important; /* Espacio para el botón de ojo */
+  }
+
+  /* Botón de ojo DENTRO del input - posicionado absolutamente */
+  .toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+    z-index: 10;
+  }
+
+  .toggle-password:hover {
+    color: #3498db;
+  }
+
+  .toggle-password:focus {
+    outline: none;
+  }
+
+  .toggle-password i {
+    font-size: 1.1rem;
+  }
+
+  /* DISEÑO DE DOS COLUMNAS - MODERNO Y LIMPIO */
+  .register-form .form-row {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+
+  .register-form .form-row > .form-group {
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+
+  /* Espaciado elegante entre columnas */
+  .register-form .form-row .col-md-6:first-child {
+    padding-right: 12px;
+  }
+
+  .register-form .form-row .col-md-6:last-child {
+    padding-left: 12px;
+  }
+
+  /* Asegurar que cada input tenga el mismo tamaño que login */
+  .register-form .form-group {
+    margin-bottom: 20px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .register-page-wrapper {
+      padding: 20px 15px;
+    }
+
+    .register-container {
+      max-width: 100%;
+    }
+
+    .register-form {
+      padding: 35px 25px;
+    }
+
+    .register-form h1 {
+      font-size: 1.75rem;
+    }
+
+    .register-icon {
+      font-size: 2.5rem;
+    }
+
+    .register-form .form-row .col-md-6:first-child,
+    .register-form .form-row .col-md-6:last-child {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+</style>
+
+<!-- ============================================
+     CONTENIDO DEL FORMULARIO DE REGISTRO
+     ============================================ -->
+<div class="register-page-wrapper">
+  <div class="register-container">
+    <!-- Tarjeta del formulario - DISEÑO MODERNO Y LIMPIO -->
+    <div class="register-form">
+      <!-- Icono y título -->
+      <i class="fas fa-user-plus register-icon"></i>
+      <h1>Crear Cuenta</h1>
+      
+      <!-- Formulario de registro -->
+      <form method="post" class="form" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Fila 1: RUT y Usuario -->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="{{ form.rut.id_for_label }}">
+              <i class="fas fa-id-card"></i> RUT
+            </label>
+            {{ form.rut }}
+            {% if form.rut.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.rut.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-6">
+            <label for="{{ form.username.id_for_label }}">
+              <i class="fas fa-user"></i> Nombre de Usuario
+            </label>
+            {{ form.username }}
+            {% if form.username.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.username.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Fila 2: Nombre y Apellido -->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="{{ form.first_name.id_for_label }}">
+              <i class="fas fa-id-badge"></i> Nombre
+            </label>
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.first_name.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-6">
+            <label for="{{ form.last_name.id_for_label }}">
+              <i class="fas fa-id-badge"></i> Apellido
+            </label>
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.last_name.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Fila 3: Email y Teléfono -->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="{{ form.email.id_for_label }}">
+              <i class="fas fa-envelope"></i> Correo Electrónico
+            </label>
+            {{ form.email }}
+            {% if form.email.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.email.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-6">
+            <label for="{{ form.telefono.id_for_label }}">
+              <i class="fas fa-phone"></i> Teléfono
+            </label>
+            {{ form.telefono }}
+            {% if form.telefono.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.telefono.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Fila 4: Dirección (ancho completo) -->
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="{{ form.direccion.id_for_label }}">
+              <i class="fas fa-map-marker-alt"></i> Dirección
+            </label>
+            {{ form.direccion }}
+            {% if form.direccion.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.direccion.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Fila 5: Contraseñas -->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="{{ form.password1.id_for_label }}">
+              <i class="fas fa-lock"></i> Contraseña
+            </label>
+            <div class="password-wrapper">
+              {{ form.password1 }}
+              <button type="button" class="toggle-password" aria-label="Mostrar contraseña" data-target="password1">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            {% if form.password1.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.password1.errors.0 }}
+              </div>
+            {% endif %}
+            {% if form.password1.help_text %}
+              <small class="form-text">{{ form.password1.help_text }}</small>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-6">
+            <label for="{{ form.password2.id_for_label }}">
+              <i class="fas fa-lock"></i> Confirmar Contraseña
+            </label>
+            <div class="password-wrapper">
+              {{ form.password2 }}
+              <button type="button" class="toggle-password" aria-label="Mostrar contraseña" data-target="password2">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            {% if form.password2.errors %}
+              <div class="invalid-feedback d-block">
+                {{ form.password2.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Botón de registro -->
+        <button type="submit" class="register-btn">
+          <i class="fas fa-user-plus"></i> Crear Cuenta
+        </button>
+      </form>
+
+      <!-- Enlace para iniciar sesión -->
+      <div class="login-link">
+        <p class="mb-0">
+          ¿Ya tienes una cuenta? 
+          <a href="{% url 'login_custom' %}">
+            <strong>Inicia sesión aquí</strong>
+          </a>
+        </p>
+      </div>
+
+      <!-- Botón para volver a inicio -->
+      <div class="back-to-home text-center mt-3">
+        <a href="{% url 'index' %}" class="btn-back-home">
+          <i class="fas fa-arrow-left"></i> Volver a Inicio
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     JAVASCRIPT PARA MOSTRAR/OCULTAR CONTRASEÑA
+     ============================================ -->
+<script>
+  /**
+   * Funcionalidad para mostrar/ocultar contraseña
+   * Funciona con ambos campos de contraseña (password1 y password2)
+   */
+  document.addEventListener('DOMContentLoaded', function() {
+    // Obtener todos los botones de toggle password
+    const toggleButtons = document.querySelectorAll('.toggle-password');
+    
+    toggleButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        // Determinar qué input de contraseña corresponde
+        const target = this.getAttribute('data-target');
+        let passwordInput;
+        
+        if (target === 'password1') {
+          passwordInput = document.querySelector('#id_password1');
+        } else if (target === 'password2') {
+          passwordInput = document.querySelector('#id_password2');
+        } else {
+          // Si no hay data-target, buscar el input más cercano
+          passwordInput = this.parentElement.querySelector('input[type="password"], input[type="text"]');
+        }
+        
+        if (passwordInput) {
+          // Cambiar el tipo de input
+          const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+          passwordInput.setAttribute('type', type);
+          
+          // Cambiar el ícono
+          const icon = this.querySelector('i');
+          if (type === 'password') {
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+          } else {
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+          }
+        }
+      });
+    });
+  });
+</script>
+
+{% endblock content %}
