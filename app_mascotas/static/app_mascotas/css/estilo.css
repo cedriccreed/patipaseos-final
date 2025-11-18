@@ -147,34 +147,32 @@ header h1 {
     }
 }
 
-/* Navbar específica para página de inicio con efecto RGB */
+/* Navbar específica para página de inicio - CELESTE, BLANCO Y PLOMO */
 .home-navbar {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(135, 206, 250, 0.15) 50%, rgba(255, 255, 255, 0.95) 100%);
-    background-size: 200% 200%;
-    backdrop-filter: blur(10px);
-    padding: 15px 0;
+    background: linear-gradient(135deg, #87CEEB 0%, #ffffff 50%, #708090 100%);
+    padding: 20px 0;
     position: relative;
     z-index: 1000;
+    box-shadow: 0 4px 20px rgba(135, 206, 235, 0.2);
     border-bottom: none !important;
-    animation: rgbGradient 5s ease infinite;
 }
 
 .home-navbar .navbar-brand {
     display: flex;
     align-items: center;
-    flex-shrink: 0; /* No se encoge */
+    flex-shrink: 0;
 }
 
 .home-navbar .navbar-brand img {
-    width: 100px;
+    width: 120px;
     height: auto;
     transition: transform 0.3s ease, filter 0.3s ease;
-    filter: drop-shadow(0 0 5px rgba(135, 206, 250, 0.5));
+    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3));
 }
 
-.home-navbar .navbar-brand img:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 10px rgba(135, 206, 250, 0.8));
+.home-navbar .navbar-brand:hover img {
+    transform: scale(1.08);
+    filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.5));
 }
 
 /* Contenedor del navbar con flexbox para centrar opciones */
@@ -197,11 +195,46 @@ header h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
+}
+
+/* Enlaces del navbar - CELESTE, BLANCO Y PLOMO */
+.home-navbar .nav-link {
+    color: #2c3e50 !important;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 10px 25px !important;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2px solid rgba(112, 128, 144, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.home-navbar .nav-link:hover {
+    color: #ffffff !important;
+    background: rgba(135, 206, 235, 0.8);
+    border-color: rgba(135, 206, 235, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
+}
+
+.home-navbar .nav-link i {
+    margin-right: 8px;
+    font-size: 1rem;
 }
 
 /* En móviles, el menú vuelve a su posición normal */
 @media (max-width: 991px) {
+    .home-navbar {
+        padding: 15px 0;
+    }
+    
+    .home-navbar .navbar-brand img {
+        width: 100px;
+    }
+    
     .home-navbar .navbar-collapse {
         position: static;
         transform: none;
@@ -212,32 +245,38 @@ header h1 {
     .home-navbar .navbar-nav {
         flex-direction: column;
         width: 100%;
+        gap: 10px;
     }
-}
-
-.home-navbar .nav-link {
-    color: #2c3e50 !important;
-    font-weight: 500;
-    padding: 8px 20px !important;
-    transition: color 0.3s ease;
-    margin: 0 5px;
-    border: none;
-    background: transparent;
-}
-
-.home-navbar .nav-link:hover {
-    color: #87cefa !important;
-    background: transparent;
-    border: none;
+    
+    .home-navbar .nav-link {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+    }
 }
 
 /* Botón hamburguesa para home-navbar */
 .home-navbar .navbar-toggler {
-    border-color: rgba(44, 62, 80, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
+}
+
+.home-navbar .navbar-toggler:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+.home-navbar .navbar-toggler:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
 .home-navbar .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(44, 62, 80, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 /* ============================================
@@ -248,9 +287,51 @@ header h1 {
 .contenido-principal {
     text-align: center;
     margin-top: 0;
-    padding-top: var(--spacing-md);
+    padding-top: 0;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
     position: relative;
-    min-height: calc(100vh - 200px); /* Altura mínima menos header y footer */
+    background: #ffffff;
+    overflow: visible;
+}
+
+/* Eliminar cualquier espacio entre contenido y footer */
+.contenido-principal > *:last-child {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Eliminar espacios de Bootstrap que puedan crear el rectángulo blanco */
+.contenido-principal .container:last-child {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.contenido-principal .row:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Asegurar que el último div no tenga espacio */
+body > main > div:last-child {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Eliminar espacio entre main y footer */
+main.contenido-principal + footer {
+    margin-top: 0 !important;
+}
+
+/* Asegurar que no haya gap en el flex container */
+body {
+    gap: 0 !important;
+}
+
+/* Eliminar cualquier espacio del último elemento dentro del main */
+main.contenido-principal > div:last-child,
+main.contenido-principal > section:last-child {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 /* Ajuste cuando no hay navbar (páginas de login/registro) */
@@ -537,20 +618,20 @@ body:not(:has(header)) .contenido-principal {
     }
 }
 
-/* Footer principal con efecto RGB */
+/* Footer principal - CONSISTENTE CON EL DISEÑO */
 footer {
     text-align: center;
-    padding: var(--spacing-md) 0;
-    background: linear-gradient(135deg, #000000 0%, #2c2c2c 25%, #4a4a4a 50%, #2c2c2c 75%, #000000 100%);
-    background-size: 200% 200%;
+    padding: 40px 0 20px 0;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
     color: white;
     width: 100%;
-    margin-top: auto;
+    margin-top: 0 !important;
+    padding-top: 40px !important;
     position: relative;
     z-index: 10;
     clear: both;
-    border-top: 2px solid rgba(255, 255, 255, 0.2);
-    animation: footerRgbGradient 6s ease infinite, footerRgbBorder 4s ease infinite;
+    border-top: 3px solid rgba(102, 126, 234, 0.3);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Lista de enlaces sociales */

@@ -6,6 +6,21 @@
 
 {% block content %}
 
+<!-- Div de fondo con imagen -->
+<div id="background-image" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+<script>
+  // Aplicar la imagen de fondo usando JavaScript
+  document.addEventListener('DOMContentLoaded', function() {
+    const bgDiv = document.getElementById('background-image');
+    if (bgDiv) {
+      bgDiv.style.background = 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/app_mascotas/img/perro2.jpg") fixed center';
+      bgDiv.style.backgroundSize = 'cover';
+      bgDiv.style.backgroundPosition = 'center';
+      bgDiv.style.backgroundRepeat = 'no-repeat';
+    }
+  });
+</script>
+
 <!-- ============================================
      ESTILOS MODERNOS Y LIMPIOS PARA REGISTRO
      ============================================ -->
@@ -17,12 +32,11 @@
   
   /* Fondo de la página con imagen y overlay - IGUAL QUE LOGIN */
   body {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                url("{% static 'app_mascotas/img/no_avatar.jpg' %}") fixed center;
-    background-size: cover;
-    margin: 0;
-    min-height: 100vh;
-    padding-bottom: 0;
+    background: transparent !important;
+    margin: 0 !important;
+    min-height: 100vh !important;
+    padding-bottom: 0 !important;
+    position: relative;
   }
   
   /* Contenedor principal - CENTRADO PERFECTO */
@@ -579,9 +593,10 @@
 </div>
 
 <!-- ============================================
-     JAVASCRIPT PARA MOSTRAR/OCULTAR CONTRASEÑA
+     JAVASCRIPT PARA MOSTRAR/OCULTAR CONTRASEÑA Y FONDO
      ============================================ -->
 <script>
+
   /**
    * Funcionalidad para mostrar/ocultar contraseña
    * Funciona con ambos campos de contraseña (password1 y password2)

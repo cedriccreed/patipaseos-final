@@ -59,56 +59,286 @@
 {% endif %}
 
 <!-- ============================================
-     SECCIÓN DE SERVICIOS (SOLO SI HAY SERVICIOS)
+     SECCIÓN DE SERVICIOS - DISEÑO ELEGANTE Y CONSISTENTE
      ============================================ -->
+<style>
+  .services-section {
+    padding: 80px 0 60px 0;
+    background: #ffffff;
+  }
+  
+  .services-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 60px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  
+  .service-card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    border: 1px solid #e9ecef;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #87CEEB 0%, #708090 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  
+  .service-card:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-color: #87CEEB;
+  }
+  
+  .service-card-header {
+    background: linear-gradient(135deg, #87CEEB 0%, #ffffff 50%, #708090 100%);
+    color: #2c3e50;
+    padding: 25px 20px;
+    text-align: center;
+    border: none;
+  }
+  
+  .service-card-header h5 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2c3e50;
+  }
+  
+  .service-card-header .service-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+  }
+  
+  .service-card-body {
+    padding: 30px 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .service-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 4px solid #f8f9fa;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .service-card:hover .service-avatar {
+    transform: scale(1.05);
+    border-color: #87CEEB;
+    box-shadow: 0 6px 20px rgba(135, 206, 235, 0.3);
+  }
+  
+  .service-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .service-description {
+    color: #6c757d;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+  
+  .service-card-footer {
+    padding: 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    text-align: center;
+  }
+  
+  .service-btn {
+    background: linear-gradient(135deg, #87CEEB 0%, #708090 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 25px;
+    width: 100%;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
+  }
+  
+  .service-btn:hover {
+    background: linear-gradient(135deg, #708090 0%, #87CEEB 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(135, 206, 235, 0.4);
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  .service-author {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-top: 15px;
+    margin-bottom: 0;
+  }
+  
+  .service-author i {
+    margin-right: 5px;
+    color: #87CEEB;
+  }
+  
+  .no-services-alert {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: none;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .no-services-alert h4 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  .no-services-alert p {
+    color: #6c757d;
+    margin: 0;
+  }
+  
+  .pagination {
+    margin-top: 50px;
+  }
+  
+  .pagination .page-link {
+    color: #87CEEB;
+    border: 1px solid #e9ecef;
+    padding: 10px 15px;
+    margin: 0 3px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .pagination .page-link:hover {
+    background: #87CEEB;
+    color: #ffffff;
+    border-color: #87CEEB;
+    transform: translateY(-2px);
+  }
+  
+  .pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, #87CEEB 0%, #708090 100%);
+    border-color: #87CEEB;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    .services-section {
+      padding: 50px 0;
+    }
+    
+    .services-title {
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+    
+    .service-card-header h5 {
+      font-size: 1.1rem;
+    }
+    
+    .service-card-header .service-price {
+      font-size: 1.5rem;
+    }
+    
+    .service-avatar {
+      width: 100px;
+      height: 100px;
+    }
+  }
+</style>
+
 {% if obtener %}
-<div class="container mt-5 mb-5">
-    <h2 class="text-center mb-4"><strong>Publicación de servicios</strong></h2>
+<div class="services-section">
+  <div class="container">
+    <h2 class="services-title animate__animated animate__fadeInDown">Publicación de Servicios</h2>
     
     <div class="row">
         {% for servicio in obtener %}
             <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card text-center h-100">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="card-title mb-0">{{ servicio.tipo_servicio }}</h5>
-                        <h4 class="mb-0">${{ servicio.precio }}</h4>
+                <div class="service-card animate__animated animate__fadeInUp">
+                    <div class="service-card-header">
+                        <h5 class="mb-0">{{ servicio.tipo_servicio }}</h5>
+                        <p class="service-price mb-0">${{ servicio.precio|floatformat:0 }}</p>
                     </div>
-                    <div class="card-body d-flex flex-column">
-                        <div class="mb-3">
-                            <div class="rounded-circle overflow-hidden mx-auto" style="width: 100px; height: 100px;">
-                                {% if servicio.cuidador.propietario.imagen %}
-                                    <img src="{{ servicio.cuidador.propietario.imagen.url }}" class="w-100 h-100" alt="User-Profile-Image" style="object-fit: cover;">
-                                {% else %}
-                                    <img src="{% static 'app_mascotas/img/no_avatar.jpg' %}" class="w-100 h-100" alt="User-Profile-Image" style="object-fit: cover;">
-                                {% endif %}
-                            </div>
+                    <div class="service-card-body">
+                        <div class="service-avatar">
+                            {% if servicio.cuidador.propietario.imagen %}
+                                <img src="{{ servicio.cuidador.propietario.imagen.url }}" alt="Avatar de {{ servicio.cuidador.propietario.username }}">
+                            {% else %}
+                                <img src="{% static 'app_mascotas/img/no_avatar.jpg' %}" alt="Avatar por defecto">
+                            {% endif %}
                         </div>
-                        <p class="card-text flex-grow-1">{{ servicio.descripcion }}</p>
+                        <p class="service-description">{{ servicio.descripcion|default:"Servicio profesional de cuidado de mascotas." }}</p>
                     </div>
-                    <div class="card-footer">
+                    <div class="service-card-footer">
                         {% if servicio.cuidador.propietario == user %}
-                            <a href="{% url 'perfil' %}" class="btn btn-lg btn-primary btn-block">Ver Detalles</a>
+                            <a href="{% url 'perfil' %}" class="service-btn">Ver Detalles</a>
                         {% else %}
-                            <a href="{% url 'perfil_servicio' servicio.cuidador.propietario.username %}" class="btn btn-lg btn-primary btn-block">Ver Detalles</a>
+                            <a href="{% url 'perfil_servicio' servicio.cuidador.propietario.username %}" class="service-btn">Ver Detalles</a>
                         {% endif %}
-                        <p class="card-text mt-2 mb-0"><small class="text-muted">Publicado por: {{ servicio.cuidador.propietario.username }}</small></p>
+                        <p class="service-author">
+                            <i class="fas fa-user"></i> Publicado por: <strong>{{ servicio.cuidador.propietario.username }}</strong>
+                        </p>
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
     
-    <!-- Paginación -->
+    <!-- Paginación mejorada -->
     {% if obtener.has_other_pages %}
-        <div class="d-flex justify-content-center mt-4">
+        <div class="d-flex justify-content-center">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     {% if obtener.has_previous %}
                         <li class="page-item">
-                            <a class="page-link" href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo;&laquo;</a>
+                            <a class="page-link" href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" aria-label="Primera página">
+                                <i class="fas fa-angle-double-left"></i>
+                            </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ obtener.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo;</a>
+                            <a class="page-link" href="?page={{ obtener.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" aria-label="Página anterior">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
                         </li>
                     {% endif %}
 
@@ -117,7 +347,7 @@
                             <li class="page-item active">
                                 <span class="page-link">{{ page_number }}</span>
                             </li>
-                        {% else %}
+                        {% elif page_number > obtener.number|add:'-3' and page_number < obtener.number|add:'3' %}
                             <li class="page-item">
                                 <a class="page-link" href="?page={{ page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ page_number }}</a>
                             </li>
@@ -126,10 +356,14 @@
 
                     {% if obtener.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ obtener.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&raquo;</a>
+                            <a class="page-link" href="?page={{ obtener.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" aria-label="Página siguiente">
+                                <i class="fas fa-angle-right"></i>
+                            </a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ obtener.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&raquo;&raquo;</a>
+                            <a class="page-link" href="?page={{ obtener.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" aria-label="Última página">
+                                <i class="fas fa-angle-double-right"></i>
+                            </a>
                         </li>
                     {% endif %}
                 </ul>
@@ -138,69 +372,272 @@
     {% endif %}
 </div>
 {% else %}
-<div class="container mt-5 mb-5">
-    <div class="alert alert-info text-center">
-        <h4>No se encontraron servicios</h4>
-        <p>Intenta buscar con otros términos o revisa más tarde.</p>
+<div class="services-section">
+  <div class="container">
+    <div class="alert no-services-alert text-center">
+      <i class="fas fa-search fa-3x mb-3" style="color: #87CEEB;"></i>
+      <h4>No se encontraron servicios</h4>
+      <p>Intenta buscar con otros términos o revisa más tarde.</p>
     </div>
+  </div>
 </div>
 {% endif %}
 
 <!-- ============================================
-     SECCIÓN DE CARACTERÍSTICAS
+     SECCIÓN DE CARACTERÍSTICAS - DISEÑO ELEGANTE
      ============================================ -->
-<div class="container mt-5 text-center">
-    <!-- Título animado -->
-    <h1 class="animate__animated animate__fadeInDown" style="color: #808080;">PATIPASEO TE OFRECE</h1>
-    <h2 class="animate__animated animate__fadeInDown" style="color: #808080; font-size: 1.5rem;">RAZONES PRINCIPALES</h2>
-    <div class="row">
+<style>
+  .features-section {
+    padding: 80px 0 0 0;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    margin-bottom: 0 !important;
+  }
   
+  .features-section .container {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Eliminar márgenes de Bootstrap en la última fila */
+  .features-section .row:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .features-section .mb-4:last-child,
+  .features-section .mb-5:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  /* Espacio adecuado después de los iconos */
+  .features-icons-container {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  .features-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  
+  .features-subtitle {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #6c757d;
+    margin-bottom: 60px;
+    letter-spacing: 0.5px;
+  }
+  
+  .feature-card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 40px 30px;
+    height: 100%;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    border: 1px solid #e9ecef;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #87CEEB 0%, #708090 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  
+  .feature-card:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-color: #87CEEB;
+  }
+  
+  .feature-icon {
+    font-size: 3.5rem;
+    margin-bottom: 25px;
+    display: inline-block;
+    transition: transform 0.4s ease;
+  }
+  
+  .feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+  }
+  
+  .feature-icon.verified {
+    color: #87CEEB;
+  }
+  
+  .feature-icon.veterinary {
+    color: #708090;
+  }
+  
+  .feature-icon.happy {
+    color: #87CEEB;
+  }
+  
+  .feature-icon.tracking {
+    color: #708090;
+  }
+  
+  .feature-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 15px;
+  }
+  
+  .feature-card p {
+    font-size: 1rem;
+    color: #6c757d;
+    line-height: 1.7;
+    margin: 0;
+  }
+  
+  .features-icons-section {
+    margin-top: 60px;
+    padding: 30px 0 50px 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .features-icons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .feature-pet-icon {
+    font-size: 4rem;
+    color: #87CEEB;
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .feature-pet-icon:nth-child(1) {
+    animation-delay: 0s;
+  }
+  
+  .feature-pet-icon:nth-child(2) {
+    animation-delay: 0.5s;
+    color: #708090;
+  }
+  
+  .feature-pet-icon:nth-child(3) {
+    animation-delay: 1s;
+    color: #87CEEB;
+  }
+  
+  .feature-pet-icon:hover {
+    transform: scale(1.2) rotate(10deg);
+    color: #87CEEB;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .features-section {
+      padding: 50px 0;
+    }
+    
+    .features-title {
+      font-size: 2rem;
+    }
+    
+    .features-subtitle {
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+    }
+    
+    .feature-card {
+      padding: 30px 20px;
+      margin-bottom: 20px;
+    }
+    
+    .features-icons-container {
+      gap: 25px;
+    }
+    
+    .feature-pet-icon {
+      font-size: 3rem;
+    }
+  }
+</style>
+
+<div class="features-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h1 class="features-title animate__animated animate__fadeInDown">PATIPASEO TE OFRECE</h1>
+      <h2 class="features-subtitle animate__animated animate__fadeInDown">RAZONES PRINCIPALES</h2>
+    </div>
+    
+    <div class="row">
       <!-- Sección: Personas verificadas -->
-      <div class="col-md-6">
-        <div class="section-container animate__animated animate__fadeInUp rounded p-4" style="color: #3498db; border: 2px solid rgb(128, 128, 128); background: rgba(255, 255, 255, 0.8); transition: background 0.3s;">
-          <i class="fas fa-check-circle fa-3x" style="color: rgb(75, 0, 130);"></i>
-          <h2 style="color: black;">Personas verificadas</h2>
-          <p style="color: black;">Todas las personas que ofrecen servicio de cuidado o paseo han pasado por un proceso de verificación.</p>
+      <div class="col-md-6 col-lg-3 mb-4">
+        <div class="feature-card animate__animated animate__fadeInUp">
+          <i class="fas fa-check-circle feature-icon verified"></i>
+          <h3>Personas verificadas</h3>
+          <p>Todas las personas que ofrecen servicio de cuidado o paseo han pasado por un proceso de verificación.</p>
         </div>
       </div>
   
       <!-- Sección: Garantía veterinaria -->
-      <div class="col-md-6">
-        <div class="section-container animate__animated animate__fadeInUp rounded p-4" style="color: #2ecc71; border: 2px solid rgb(128, 128, 128); background: rgba(255, 255, 255, 0.8); transition: background 0.3s;">
-          <i class="fas fa-medkit fa-3x" style="color: rgb(0, 0, 128);"></i>
-          <h2 style="color: black;">Garantía veterinaria</h2>
-          <p style="color: black;">Todos los perros durante el servicio Duko cuentan con garantía veterinaria limitada en caso de alguna emergencia.</p>
+      <div class="col-md-6 col-lg-3 mb-4">
+        <div class="feature-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+          <i class="fas fa-medkit feature-icon veterinary"></i>
+          <h3>Garantía veterinaria</h3>
+          <p>Todos los perros durante el servicio cuentan con garantía veterinaria limitada en caso de alguna emergencia.</p>
         </div>
       </div>
   
       <!-- Sección: Perros felices -->
-      <div class="col-md-6 mt-4">
-        <div class="section-container animate__animated animate__fadeInUp rounded p-4" style="color: #e74c3c; border: 2px solid rgb(128, 128, 128); background: rgba(255, 255, 255, 0.8); transition: background 0.3s;">
-          <i class="fas fa-paw fa-3x" style="color: rgb(128, 0, 128);"></i>
-          <h2 style="color: black;">Perros felices</h2>
-          <p style="color: black;">Tu perro nunca será enjaulado cuando se quede a dormir y estará bien cuidado. Durante los paseos vamos a su ritmo para que lo disfrute.</p>
+      <div class="col-md-6 col-lg-3 mb-4">
+        <div class="feature-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+          <i class="fas fa-paw feature-icon happy"></i>
+          <h3>Perros felices</h3>
+          <p>Tu perro nunca será enjaulado cuando se quede a dormir y estará bien cuidado. Durante los paseos vamos a su ritmo para que lo disfrute.</p>
         </div>
       </div>
   
       <!-- Sección: Seguimiento -->
-      <div class="col-md-6 mt-4">
-        <div class="section-container animate__animated animate__fadeInUp rounded p-4" style="color: #f39c12; border: 2px solid rgb(128, 128, 128); background: rgba(255, 255, 255, 0.8); transition: background 0.3s;">
-          <i class="fas fa-chart-line fa-3x" style="color: rgb(0, 0, 128);"></i>
-          <h2 style="color: black;">Seguimiento</h2>
-          <p style="color: black;">Podrás consultar y dar seguimiento de cada paseo o cuidado que se realice a través de la App o portal de seguimiento.</p>
+      <div class="col-md-6 col-lg-3 mb-4">
+        <div class="feature-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+          <i class="fas fa-chart-line feature-icon tracking"></i>
+          <h3>Seguimiento</h3>
+          <p>Podrás consultar y dar seguimiento de cada paseo o cuidado que se realice a través de la App o portal de seguimiento.</p>
         </div>
       </div>
+    </div>
   
-      <!-- Agrega un contenedor para los íconos animados -->
-      <div class="col-md-12 mt-4">
-        <div class="icon-container animate__animated animate__bounceIn" style="color: #8e44ad;">
-          <i class="fas fa-dog fa-5x animate__animated animate__hover__rubberBand" style="color: rgb(75, 0, 130); margin-right: 20px;"></i>
-          <i class="fas fa-paw fa-5x animate__animated animate__hover__rubberBand" style="color: rgb(128, 0, 128);"></i>
-          <i class="fas fa-cat fa-5x animate__animated animate__hover__rubberBand" style="color: rgb(0, 0, 128); margin-left: 20px;"></i>
-        </div>
+    <!-- Iconos de mascotas animados -->
+    <div class="features-icons-section">
+      <div class="features-icons-container">
+        <i class="fas fa-dog feature-pet-icon"></i>
+        <i class="fas fa-paw feature-pet-icon"></i>
+        <i class="fas fa-cat feature-pet-icon"></i>
       </div>
-  
     </div>
   </div>
+</div>
 
 {% endblock %}
