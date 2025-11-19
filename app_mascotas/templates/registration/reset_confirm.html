@@ -2,35 +2,590 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block title %}Nueva Contraseña - PatiPaseos{% endblock %}
+
 {% block content %}
 
+<!-- Div de fondo con gradiente RGB: Negro - Calipso - Blanco -->
+<div id="background-image" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%);"></div>
 
+<!-- ============================================
+     ESTILOS ESPECÍFICOS DE LA PÁGINA DE NUEVA CONTRASEÑA
+     ============================================ -->
+<style>
+  /**
+   * Estilos para la página de nueva contraseña
+   * Formulario perfectamente centrado vertical y horizontalmente
+   */
+  
+  /* Aplicar tipografía Inter/Poppins a todo el formulario */
+  body,
+  .new-password-form {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
 
-  <!------>
+  /* Aplicar fuente a elementos específicos, pero NO a iconos de Font Awesome */
+  .new-password-form label,
+  .new-password-form input,
+  .new-password-form button,
+  .new-password-form p,
+  .new-password-form a,
+  .new-password-form h1,
+  .new-password-form h2,
+  .new-password-form h3,
+  .new-password-form h4,
+  .new-password-form h5,
+  .new-password-form h6,
+  .new-password-form span,
+  .new-password-form div {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
 
-  <div class="cont1">
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            
+  /* Asegurar que los iconos de Font Awesome mantengan su fuente */
+  .new-password-form i,
+  .new-password-form .fas,
+  .new-password-form .far,
+  .new-password-form .fab,
+  .new-password-form .fa,
+  .new-password-form [class*="fa-"] {
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+  
+  /* Fondo de la página con gradiente RGB: Negro - Calipso - Blanco */
+  html {
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%) !important;
+    min-height: 100vh !important;
+  }
+  
+  body {
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%) !important;
+    background-color: transparent !important;
+    margin: 0 !important;
+    min-height: 100vh !important;
+    padding-bottom: 0 !important;
+    position: relative;
+  }
+  
+  /* Asegurar que main y body no tengan fondo blanco */
+  main {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  
+  /* Contenedor principal - CENTRADO PERFECTO */
+  body .contenido-principal,
+  main.contenido-principal,
+  .contenido-principal {
+    background: transparent !important;
+    background-color: transparent !important;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Asegurar que el div de fondo esté detrás de todo */
+  #background-image {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -999 !important;
+    pointer-events: none !important;
+  }
+
+  /* Wrapper del formulario - CENTRADO VERTICAL Y HORIZONTAL */
+  .new-password-page-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    min-height: calc(100vh - 200px);
+  }
+
+  .new-password-container {
+    width: 100%;
+    max-width: 450px;
+  }
+
+  /* Tarjeta del formulario */
+  .new-password-form {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 50px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease-out;
+    width: 100%;
+    backdrop-filter: blur(10px);
+  }
+
+  /* Animación de entrada */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Título del formulario */
+  .new-password-form h1 {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 2rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Subtítulo/Instrucciones */
+  .new-password-form .instructions {
+    color: #6c757d;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Icono del título */
+  .new-password-icon {
+    font-size: 3rem;
+    color: #3498db;
+    margin-bottom: 15px;
+    display: block;
+    text-align: center;
+  }
+
+  /* Labels mejorados */
+  .new-password-form label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    display: block;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Iconos dentro de los labels */
+  .new-password-form label i,
+  .new-password-form label .fas,
+  .new-password-form label .fa {
+    margin-right: 8px;
+    color: #3498db;
+    font-size: 1rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
+  }
+
+  /* INPUTS MEJORADOS Y CONSISTENTES */
+  .new-password-form .form-control,
+  .new-password-form input[type="text"],
+  .new-password-form input[type="password"],
+  .new-password-form input,
+  .new-password-form #id_new_password1,
+  .new-password-form #id_new_password2 {
+    border-radius: 10px !important;
+    padding: 14px 18px !important;
+    border: 2px solid #e0e0e0 !important;
+    transition: all 0.3s ease !important;
+    background: #fafafa !important;
+    font-size: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-bottom: 5px !important;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  .new-password-form .form-control:focus,
+  .new-password-form input[type="text"]:focus,
+  .new-password-form input[type="password"]:focus,
+  .new-password-form input:focus,
+  .new-password-form #id_new_password1:focus,
+  .new-password-form #id_new_password2:focus {
+    border-color: #3498db !important;
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15) !important;
+    background: white !important;
+    outline: none !important;
+    transform: translateY(-2px) !important;
+  }
+
+  .new-password-form .form-control:hover:not(:focus),
+  .new-password-form input[type="text"]:hover:not(:focus),
+  .new-password-form input[type="password"]:hover:not(:focus),
+  .new-password-form input:hover:not(:focus),
+  .new-password-form #id_new_password1:hover:not(:focus),
+  .new-password-form #id_new_password2:hover:not(:focus) {
+    border-color: #b0b0b0 !important;
+    background: #f5f5f5 !important;
+  }
+
+  /* Inputs con error */
+  .new-password-form .is-invalid {
+    border-color: #dc3545 !important;
+    background: #fff5f5 !important;
+  }
+
+  .new-password-form .is-invalid:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15) !important;
+  }
+
+  /* Contenedor para campo de contraseña con botón de ojo DENTRO del input */
+  .password-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Input de contraseña con espacio para el ojo */
+  .password-wrapper .form-control,
+  .password-wrapper input[type="password"],
+  .password-wrapper input[type="text"],
+  .password-wrapper input,
+  .password-wrapper #id_new_password1,
+  .password-wrapper #id_new_password2 {
+    padding-right: 50px !important;
+    border-radius: 10px !important;
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+    padding-left: 18px !important;
+    border: 2px solid #e0e0e0 !important;
+    transition: all 0.3s ease !important;
+    background: #fafafa !important;
+    font-size: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-bottom: 5px !important;
+  }
+
+  .password-wrapper .form-control:focus,
+  .password-wrapper input[type="password"]:focus,
+  .password-wrapper input[type="text"]:focus,
+  .password-wrapper input:focus,
+  .password-wrapper #id_new_password1:focus,
+  .password-wrapper #id_new_password2:focus {
+    border-color: #3498db !important;
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15) !important;
+    background: white !important;
+    outline: none !important;
+    transform: translateY(-2px) !important;
+  }
+
+  .password-wrapper .form-control:hover:not(:focus),
+  .password-wrapper input[type="password"]:hover:not(:focus),
+  .password-wrapper input[type="text"]:hover:not(:focus),
+  .password-wrapper input:hover:not(:focus),
+  .password-wrapper #id_new_password1:hover:not(:focus),
+  .password-wrapper #id_new_password2:hover:not(:focus) {
+    border-color: #b0b0b0 !important;
+    background: #f5f5f5 !important;
+  }
+
+  /* Botón de ojo DENTRO del input - posicionado absolutamente */
+  .toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+    z-index: 10;
+  }
+
+  /* Iconos dentro del botón toggle-password */
+  .toggle-password i,
+  .toggle-password .fas,
+  .toggle-password .fa {
+    font-size: 1.1rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
+  }
+
+  .toggle-password:hover {
+    color: #3498db;
+  }
+
+  .toggle-password:focus {
+    outline: none;
+  }
+
+  /* Estilos para el botón de envío */
+  .new-password-form .btn-success,
+  .new-password-form .btn.btn-success,
+  .new-password-form .btn.btn-success.btn-lg,
+  .new-password-form input[type="submit"],
+  .new-password-form input.btn-success,
+  .new-password-form button[type="submit"] {
+    background-color: #28a745 !important;
+    border: 1px solid #28a745 !important;
+    width: 100% !important;
+    padding: 14px !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease !important;
+    color: white !important;
+    margin-top: 10px !important;
+    cursor: pointer !important;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Efecto hover en el botón */
+  .new-password-form .btn-success:hover,
+  .new-password-form .btn.btn-success:hover,
+  .new-password-form .btn.btn-success.btn-lg:hover,
+  .new-password-form input[type="submit"]:hover,
+  .new-password-form input.btn-success:hover,
+  .new-password-form button[type="submit"]:hover {
+    background-color: #218838 !important;
+    border-color: #1e7e34 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4) !important;
+    color: white !important;
+  }
+
+  .new-password-form .btn-success:active,
+  .new-password-form .btn.btn-success:active,
+  .new-password-form input[type="submit"]:active,
+  .new-password-form input.btn-success:active,
+  .new-password-form button[type="submit"]:active {
+    transform: translateY(0) !important;
+  }
+
+  /* Mensajes de error o información */
+  .alert {
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  /* Help text para contraseñas */
+  .new-password-form .form-text {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: 8px;
+    line-height: 1.5;
+    padding-left: 5px;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  .new-password-form .form-text ul {
+    margin-top: 5px;
+    padding-left: 20px;
+    margin-bottom: 0;
+  }
+
+  .new-password-form .form-text li {
+    margin-bottom: 3px;
+  }
+
+  /* Botón para volver a inicio */
+  .btn-back-home {
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: 2px solid #dee2e6;
+    background: white;
+    font-size: 0.95rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Iconos en botón volver a inicio */
+  .btn-back-home i,
+  .btn-back-home .fas,
+  .btn-back-home .fa {
+    margin-right: 6px;
+    font-size: 0.9rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
+  }
+
+  .btn-back-home:hover {
+    color: #3498db;
+    border-color: #3498db;
+    background: #f8f9fa;
+    text-decoration: none;
+    transform: translateX(-3px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .new-password-page-wrapper {
+      padding: 20px 15px;
+    }
+
+    .new-password-form {
+      padding: 35px 25px;
+    }
+
+    .new-password-form h1 {
+      font-size: 1.75rem;
+    }
+
+    .new-password-icon {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<!-- ============================================
+     CONTENIDO DEL FORMULARIO DE NUEVA CONTRASEÑA
+     ============================================ -->
+<div class="new-password-page-wrapper">
+  <div class="new-password-container">
+    <!-- Tarjeta del formulario -->
+    <div class="new-password-form">
+      <!-- Icono y título -->
+      <i class="fas fa-key new-password-icon"></i>
+      <h1>Nueva Contraseña</h1>
+      
+      <!-- Instrucciones -->
+      <p class="instructions">
+        Ingrese su nueva contraseña dos veces para que podamos verificar que la escribió correctamente.
+      </p>
+      
+      <!-- Formulario de nueva contraseña -->
+      <form action="" method="POST" class="form">
+        {% csrf_token %}
+        
+        <!-- Campo de nueva contraseña -->
+        <div class="form-group">
+          <label for="{{ form.new_password1.id_for_label }}">
+            <i class="fas fa-lock"></i> Nueva Contraseña
+          </label>
+          <div class="password-wrapper">
+            {{ form.new_password1 }}
+            <button type="button" class="toggle-password" aria-label="Mostrar contraseña" data-target="new_password1">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          {% if form.new_password1.errors %}
+            <div class="invalid-feedback d-block">
+              {{ form.new_password1.errors.0 }}
+            </div>
+          {% endif %}
+          {% if form.new_password1.help_text %}
+            <small class="form-text">{{ form.new_password1.help_text }}</small>
+          {% endif %}
         </div>
-        <div class="col-sm-4">
-            <h2>Ingrese nueva contraseña</h2>
-            <br>
-            <h3>Ingrese su nueva contraseña dos veces para que podamos verificar que la escribió correctamente.</h3>
-            <form action="" method="POST">
-                {% csrf_token %}
-                {{form|crispy}}
-                <br>
-                <input type="submit" class="btn btn-success btn-lg" value="Cambiar contraseña"><br>
-            </form>
-            
+        
+        <!-- Campo de confirmación de contraseña -->
+        <div class="form-group">
+          <label for="{{ form.new_password2.id_for_label }}">
+            <i class="fas fa-lock"></i> Confirmar Nueva Contraseña
+          </label>
+          <div class="password-wrapper">
+            {{ form.new_password2 }}
+            <button type="button" class="toggle-password" aria-label="Mostrar contraseña" data-target="new_password2">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          {% if form.new_password2.errors %}
+            <div class="invalid-feedback d-block">
+              {{ form.new_password2.errors.0 }}
+            </div>
+          {% endif %}
         </div>
-        <div class="col-sm-4">
+        
+        {% if form.errors %}
+          <div class="alert alert-danger">
+            Por favor, corrija los errores en el formulario.
+          </div>
+        {% endif %}
+        
+        <!-- Botón de envío -->
+        <button type="submit" class="btn btn-success btn-lg mt-3">
+          <i class="fas fa-check"></i> Cambiar Contraseña
+        </button>
+      </form>
+
+      <!-- Botón para volver a inicio -->
+      <div class="back-to-home text-center mt-3">
+        <a href="{% url 'index' %}" class="btn-back-home">
+          <i class="fas fa-arrow-left"></i> Volver a Inicio
+        </a>
+      </div>
     </div>
-</div>
-</div>
+  </div>
 </div>
 
+<!-- ============================================
+     JAVASCRIPT PARA MOSTRAR/OCULTAR CONTRASEÑA
+     ============================================ -->
+<script>
+  /**
+   * Funcionalidad para mostrar/ocultar contraseña
+   * Funciona con ambos campos de contraseña (new_password1 y new_password2)
+   */
+  document.addEventListener('DOMContentLoaded', function() {
+    // Obtener todos los botones de toggle password
+    const toggleButtons = document.querySelectorAll('.toggle-password');
+    
+    toggleButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        // Determinar qué input de contraseña corresponde
+        const target = this.getAttribute('data-target');
+        let passwordInput;
+        
+        if (target === 'new_password1') {
+          passwordInput = document.querySelector('#id_new_password1');
+        } else if (target === 'new_password2') {
+          passwordInput = document.querySelector('#id_new_password2');
+        } else {
+          // Si no hay data-target, buscar el input más cercano
+          passwordInput = this.parentElement.querySelector('input[type="password"], input[type="text"]');
+        }
+        
+        if (passwordInput) {
+          // Cambiar el tipo de input
+          const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+          passwordInput.setAttribute('type', type);
+          
+          // Cambiar el ícono
+          const icon = this.querySelector('i');
+          if (type === 'password') {
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+          } else {
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+          }
+        }
+      });
+    });
+  });
+</script>
 
 {% endblock content %}

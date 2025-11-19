@@ -221,6 +221,96 @@ LANGUAGE_CODE = 'es'
 TIME_ZONE = 'UTC'
 ```
 
+### Configuración de Correo Electrónico (Cambio de Contraseña)
+
+Para que el sistema de **recuperación de contraseña** funcione correctamente, es necesario configurar el envío de correos electrónicos a través de Gmail. Sigue estos pasos:
+
+#### 1. Generar una Clave de Aplicación en Gmail
+
+**Paso 1:** Accede a tu cuenta de Google
+- Ve a [myaccount.google.com](https://myaccount.google.com)
+- Inicia sesión con tu cuenta de Gmail
+
+**Paso 2:** Activar la Verificación en Dos Pasos
+- Ve a **Seguridad** → **Verificación en dos pasos**
+- Activa la verificación en dos pasos si no está activada (es obligatorio para generar claves de aplicación)
+
+**Paso 3:** Generar la Clave de Aplicación
+1. Ve a **Seguridad** → **Contraseñas de aplicaciones**
+   - O accede directamente: [Contraseñas de aplicaciones](https://myaccount.google.com/apppasswords)
+2. En "Seleccionar app", elige **Correo**
+3. En "Seleccionar dispositivo", elige **Otro (nombre personalizado)**
+4. Escribe un nombre descriptivo (ej: "PatiPaseos Django")
+5. Haz clic en **Generar**
+6. **Copia la contraseña de 16 caracteres** que aparece (sin espacios)
+   - Ejemplo: `wgnhyrfhrsowqple`
+   - ⚠️ **Importante:** Esta contraseña solo se muestra una vez, guárdala de forma segura
+
+#### 2. Modificar la Configuración en `settings.py`
+
+Abre el archivo `patipaseos/settings.py` y localiza la sección de configuración de email (alrededor de la línea 140):
+
+```python
+# Configuración de Email - SMTP Gmail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'tu_correo@gmail.com'  # ⬅️ CAMBIA ESTO por tu correo de Gmail
+EMAIL_HOST_PASSWORD = 'tu_clave_de_aplicacion'  # ⬅️ CAMBIA ESTO por tu clave de aplicación
+```
+
+**Modifica los siguientes valores:**
+
+1. **`EMAIL_HOST_USER`**: Reemplaza `'tu_correo@gmail.com'` con tu dirección de correo de Gmail
+   ```python
+   EMAIL_HOST_USER = 'tucorreo@gmail.com'
+   ```
+
+2. **`EMAIL_HOST_PASSWORD`**: Reemplaza `'tu_clave_de_aplicacion'` con la clave de aplicación de 16 caracteres que generaste (sin espacios)
+   ```python
+   EMAIL_HOST_PASSWORD = 'wgnhyrfhrsowqple'  # Ejemplo: sin espacios
+   ```
+
+#### 3. Verificar la Configuración
+
+Después de modificar `settings.py`:
+
+1. **Reinicia el servidor de Django**:
+   ```bash
+   # Detén el servidor (Ctrl + C) y vuelve a iniciarlo
+   py manage.py runserver
+   ```
+
+2. **Prueba el sistema de recuperación de contraseña**:
+   - Ve a `http://127.0.0.1:8000/reset_password/`
+   - Ingresa un correo electrónico válido registrado en el sistema
+   - Verifica que recibas el correo con las instrucciones
+
+#### ⚠️ Notas Importantes
+
+- **Seguridad**: Nunca subas tu `settings.py` con la clave de aplicación a repositorios públicos. Usa variables de entorno en producción.
+- **Clave de Aplicación vs Contraseña**: No uses tu contraseña normal de Gmail, siempre usa una clave de aplicación.
+- **Si no funciona**: Verifica que:
+  - La verificación en dos pasos esté activada
+  - La clave de aplicación sea correcta (sin espacios)
+  - El correo electrónico en `EMAIL_HOST_USER` sea el mismo que usaste para generar la clave
+
+#### Configuración para Desarrollo (Opcional)
+
+Si solo quieres probar sin enviar correos reales, puedes usar el backend de consola:
+
+```python
+# Para desarrollo - Los correos se muestran en la consola
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+```
+
+Cuando quieras enviar correos reales, vuelve a cambiar a:
+
+```python
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+```
+
 ---
 
 ## 📁 Estructura del Proyecto

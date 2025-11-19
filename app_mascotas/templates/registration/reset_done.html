@@ -2,31 +2,327 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block title %}Correo Enviado - PatiPaseos{% endblock %}
+
 {% block content %}
 
+<!-- Div de fondo con gradiente RGB: Negro - Calipso - Blanco -->
+<div id="background-image" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%);"></div>
 
+<!-- ============================================
+     ESTILOS ESPECÍFICOS DE LA PÁGINA DE CONFIRMACIÓN
+     ============================================ -->
+<style>
+  /**
+   * Estilos para la página de confirmación de envío de correo
+   * Diseño elegante y centrado
+   */
+  
+  /* Aplicar tipografía Inter/Poppins */
+  body,
+  .confirm-form {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
 
-  <!------>
+  /* Aplicar fuente a elementos específicos, pero NO a iconos de Font Awesome */
+  .confirm-form label,
+  .confirm-form input,
+  .confirm-form button,
+  .confirm-form p,
+  .confirm-form a,
+  .confirm-form h1,
+  .confirm-form h2,
+  .confirm-form h3,
+  .confirm-form h4,
+  .confirm-form h5,
+  .confirm-form h6,
+  .confirm-form span,
+  .confirm-form div {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
 
-  <div class="cont1">
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            
-        </div>
-        <div class="col-sm-4">
-            <h2>Se acaba de enviar un correo con instrucciones de como cambiar su contraseña.</h2>
-            <form action="" method="POST">
-                {% csrf_token %}
-                {{form|crispy}}
-            </form>
-            
-        </div>
-        <div class="col-sm-4">
+  /* Asegurar que los iconos de Font Awesome mantengan su fuente */
+  .confirm-form i,
+  .confirm-form .fas,
+  .confirm-form .far,
+  .confirm-form .fab,
+  .confirm-form .fa,
+  .confirm-form [class*="fa-"] {
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+  
+  /* Fondo de la página con gradiente RGB: Negro - Calipso - Blanco */
+  html {
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%) !important;
+    min-height: 100vh !important;
+  }
+  
+  body {
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%) !important;
+    background-color: transparent !important;
+    margin: 0 !important;
+    min-height: 100vh !important;
+    padding-bottom: 0 !important;
+    position: relative;
+  }
+  
+  /* Asegurar que main y body no tengan fondo blanco */
+  main {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  
+  /* Contenedor principal - CENTRADO PERFECTO */
+  body .contenido-principal,
+  main.contenido-principal,
+  .contenido-principal {
+    background: transparent !important;
+    background-color: transparent !important;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Asegurar que el div de fondo esté detrás de todo */
+  #background-image {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -999 !important;
+    pointer-events: none !important;
+  }
+
+  /* Wrapper del contenido - CENTRADO VERTICAL Y HORIZONTAL */
+  .confirm-page-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    min-height: calc(100vh - 200px);
+  }
+
+  .confirm-container {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  /* Tarjeta de confirmación */
+  .confirm-form {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 50px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease-out;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    text-align: center;
+  }
+
+  /* Animación de entrada */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Icono de éxito */
+  .confirm-icon {
+    font-size: 4rem;
+    color: #28a745;
+    margin-bottom: 20px;
+    display: block;
+    text-align: center;
+    animation: bounceIn 0.8s ease-out;
+  }
+
+  @keyframes bounceIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* Título */
+  .confirm-form h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 2rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Mensaje de confirmación */
+  .confirm-message {
+    color: #6c757d;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    line-height: 1.6;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Botón para volver a inicio */
+  .btn-back-home {
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 10px;
+    border: 2px solid #dee2e6;
+    background: white;
+    font-size: 1rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    margin-top: 20px;
+  }
+
+  /* Iconos en botón volver a inicio */
+  .btn-back-home i,
+  .btn-back-home .fas,
+  .btn-back-home .fa {
+    margin-right: 8px;
+    font-size: 1rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
+  }
+
+  .btn-back-home:hover {
+    color: #3498db;
+    border-color: #3498db;
+    background: #f8f9fa;
+    text-decoration: none;
+    transform: translateX(-3px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Enlace para iniciar sesión */
+  .login-link {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid #dee2e6;
+  }
+
+  .login-link p {
+    color: #6c757d;
+    margin: 0;
+    font-size: 0.95rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  .login-link a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Iconos en enlaces */
+  .login-link a i,
+  .login-link a .fas,
+  .login-link a .fa {
+    margin-right: 6px;
+    font-size: 0.9rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
+  }
+
+  .login-link a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .confirm-page-wrapper {
+      padding: 20px 15px;
+    }
+
+    .confirm-form {
+      padding: 35px 25px;
+    }
+
+    .confirm-form h1 {
+      font-size: 1.75rem;
+    }
+
+    .confirm-icon {
+      font-size: 3rem;
+    }
+  }
+</style>
+
+<!-- ============================================
+     CONTENIDO DE LA PÁGINA DE CONFIRMACIÓN
+     ============================================ -->
+<div class="confirm-page-wrapper">
+  <div class="confirm-container">
+    <!-- Tarjeta de confirmación -->
+    <div class="confirm-form">
+      <!-- Icono de éxito -->
+      <i class="fas fa-check-circle confirm-icon"></i>
+      
+      <!-- Título -->
+      <h1>¡Correo Enviado!</h1>
+      
+      <!-- Mensaje de confirmación -->
+      <p class="confirm-message">
+        Se acaba de enviar un correo con instrucciones para cambiar su contraseña.
+        <br><br>
+        Por favor, revise su bandeja de entrada y siga las instrucciones del correo electrónico.
+      </p>
+
+      <!-- Enlace para iniciar sesión -->
+      <div class="login-link">
+        <p class="mb-0">
+          ¿Recordaste tu contraseña? 
+          <a href="{% url 'login_custom' %}">
+            <strong>Inicia sesión aquí</strong>
+          </a>
+        </p>
+      </div>
+
+      <!-- Botón para volver a inicio -->
+      <div class="back-to-home text-center">
+        <a href="{% url 'index' %}" class="btn-back-home">
+          <i class="fas fa-arrow-left"></i> Volver a Inicio
+        </a>
+      </div>
     </div>
+  </div>
 </div>
-</div>
-</div>
-
 
 {% endblock content %}

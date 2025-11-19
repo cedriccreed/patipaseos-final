@@ -6,20 +6,8 @@
 
 {% block content %}
 
-<!-- Div de fondo con imagen -->
-<div id="background-image" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
-<script>
-  // Aplicar la imagen de fondo usando JavaScript
-  document.addEventListener('DOMContentLoaded', function() {
-    const bgDiv = document.getElementById('background-image');
-    if (bgDiv) {
-      bgDiv.style.background = 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/app_mascotas/img/perro2.jpg") fixed center';
-      bgDiv.style.backgroundSize = 'cover';
-      bgDiv.style.backgroundPosition = 'center';
-      bgDiv.style.backgroundRepeat = 'no-repeat';
-    }
-  });
-</script>
+<!-- Div de fondo con gradiente RGB: Negro - Calipso - Blanco -->
+<div id="background-image" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%);"></div>
 
 {% if messages %}
     {% for msg in messages %}
@@ -44,23 +32,88 @@
    * Formulario perfectamente centrado vertical y horizontalmente
    */
   
-  /* Fondo de la página con imagen y overlay */
+  /* Aplicar tipografía Inter/Poppins a todo el formulario */
+  body,
+  .login-form {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Aplicar fuente a elementos específicos, pero NO a iconos de Font Awesome */
+  .login-form label,
+  .login-form input,
+  .login-form button,
+  .login-form p,
+  .login-form a,
+  .login-form h1,
+  .login-form h2,
+  .login-form h3,
+  .login-form h4,
+  .login-form h5,
+  .login-form h6,
+  .login-form span,
+  .login-form div {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Asegurar que los iconos de Font Awesome mantengan su fuente */
+  .login-form i,
+  .login-form .fas,
+  .login-form .far,
+  .login-form .fab,
+  .login-form .fa,
+  .login-form [class*="fa-"] {
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+  
+  /* Fondo de la página con gradiente RGB: Negro - Calipso - Blanco */
+  html {
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%) !important;
+    min-height: 100vh !important;
+  }
+  
   body {
-    background: transparent !important;
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%) !important;
+    background-color: transparent !important;
     margin: 0 !important;
     min-height: 100vh !important;
     padding-bottom: 0 !important;
     position: relative;
   }
   
+  /* Asegurar que main y body no tengan fondo blanco */
+  main {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  
   /* Contenedor principal - CENTRADO PERFECTO */
+  body .contenido-principal,
+  main.contenido-principal,
   .contenido-principal {
+    background: transparent !important;
+    background-color: transparent !important;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
     margin: 0;
+  }
+  
+  /* Asegurar que el div de fondo esté detrás de todo */
+  #background-image {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -999 !important;
+    pointer-events: none !important;
   }
 
   /* Wrapper del formulario - CENTRADO VERTICAL Y HORIZONTAL */
@@ -108,6 +161,7 @@
     margin-bottom: 30px;
     font-weight: bold;
     font-size: 2rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   }
 
   /* Icono del título */
@@ -126,6 +180,20 @@
     margin-bottom: 10px;
     font-size: 0.95rem;
     display: block;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Iconos dentro de los labels */
+  .login-form label i,
+  .login-form label .fas,
+  .login-form label .fa {
+    margin-right: 8px;
+    color: #3498db;
+    font-size: 1rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
   }
 
   /* INPUTS MEJORADOS Y CONSISTENTES - APLICAR A TODOS LOS INPUTS */
@@ -145,6 +213,7 @@
     width: 100% !important;
     box-sizing: border-box !important;
     margin-bottom: 5px !important;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   }
 
   .login-form .form-control:focus,
@@ -201,6 +270,7 @@
     color: white !important;
     margin-top: 10px !important;
     cursor: pointer !important;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   }
 
   /* Efecto hover en el botón */
@@ -236,6 +306,19 @@
     text-decoration: none;
     transition: color 0.3s ease;
     font-size: 0.95rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Iconos en enlaces */
+  .forgot-password a i,
+  .forgot-password a .fas,
+  .forgot-password a .fa {
+    margin-right: 6px;
+    font-size: 0.9rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
   }
 
   .forgot-password a:hover {
@@ -255,6 +338,7 @@
     color: #6c757d;
     margin: 0;
     font-size: 0.95rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   }
 
   .register-link a {
@@ -262,6 +346,19 @@
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Iconos en botón volver a inicio */
+  .btn-back-home i,
+  .btn-back-home .fas,
+  .btn-back-home .fa {
+    margin-right: 6px;
+    font-size: 0.9rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
   }
 
   .register-link a:hover {
@@ -287,6 +384,7 @@
     border: 2px solid #dee2e6;
     background: white;
     font-size: 0.95rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   }
 
   .btn-back-home:hover {
@@ -368,6 +466,17 @@
     justify-content: center;
     transition: color 0.3s ease;
     z-index: 10;
+  }
+
+  /* Iconos dentro del botón toggle-password */
+  .toggle-password i,
+  .toggle-password .fas,
+  .toggle-password .fa {
+    font-size: 1.1rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
   }
 
   .toggle-password:hover {

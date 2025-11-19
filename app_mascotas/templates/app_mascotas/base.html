@@ -10,6 +10,11 @@
          HOJAS DE ESTILO EXTERNAS (CDN)
          ============================================ -->
     
+    <!-- Google Fonts - Tipografía elegante (Inter y Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- Bootstrap 4.5.2 CSS - Framework CSS principal para diseño responsive -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
@@ -27,9 +32,29 @@
     
     <!-- Título de la página (puede ser sobrescrito en templates hijos) -->
     <title>{% block title %}PatiPaseos - Cuidadores Profesionales para Mascotas{% endblock %}</title>
+    
+    <!-- Prevenir layout shift del footer -->
+    <style>
+        /* Reservar espacio para el footer desde el inicio */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Asegurar que el footer no se mueva */
+        footer {
+            will-change: auto !important;
+            transform: translateZ(0) !important;
+            backface-visibility: hidden !important;
+        }
+        
+        /* Prevenir que las animaciones causen layout shift */
+        .animate__animated {
+            will-change: transform, opacity;
+        }
+    </style>
 </head>
 
-<body style="display: flex; flex-direction: column; min-height: 100vh;">
+<body style="display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; position: relative;">
     <!-- ============================================
          HEADER Y NAVEGACIÓN
          ============================================ -->
@@ -154,7 +179,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="footer-copyright-txt">
-                            © 2024-2025 PatiPaseos. Todos los derechos reservados.
+                            © 2024-2025 <strong>Pati</strong>Paseos. Todos los derechos reservados.
                         </div>
                     </div>
                 </div>
@@ -224,5 +249,28 @@
     <!-- Bloque para scripts adicionales que pueden ser agregados en templates hijos -->
     {% block extra_scripts %}
     {% endblock %}
+    
+    <!-- Script para prevenir layout shift del footer -->
+    <script>
+        // Prevenir layout shift del footer
+        (function() {
+            // Asegurar que el footer mantenga su posición
+            document.addEventListener('DOMContentLoaded', function() {
+                var footer = document.querySelector('footer');
+                if (footer) {
+                    footer.style.position = 'relative';
+                    footer.style.transform = 'translateZ(0)';
+                }
+            });
+            
+            // Prevenir movimiento durante la carga de imágenes
+            window.addEventListener('load', function() {
+                var footer = document.querySelector('footer');
+                if (footer) {
+                    footer.style.willChange = 'auto';
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

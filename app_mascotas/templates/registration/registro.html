@@ -6,20 +6,8 @@
 
 {% block content %}
 
-<!-- Div de fondo con imagen -->
-<div id="background-image" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
-<script>
-  // Aplicar la imagen de fondo usando JavaScript
-  document.addEventListener('DOMContentLoaded', function() {
-    const bgDiv = document.getElementById('background-image');
-    if (bgDiv) {
-      bgDiv.style.background = 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/app_mascotas/img/perro2.jpg") fixed center';
-      bgDiv.style.backgroundSize = 'cover';
-      bgDiv.style.backgroundPosition = 'center';
-      bgDiv.style.backgroundRepeat = 'no-repeat';
-    }
-  });
-</script>
+<!-- Div de fondo con gradiente RGB: Negro - Calipso - Blanco -->
+<div id="background-image" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%);"></div>
 
 <!-- ============================================
      ESTILOS MODERNOS Y LIMPIOS PARA REGISTRO
@@ -30,23 +18,89 @@
    * Inputs del mismo tamaño que login, pero formulario más amplio
    */
   
-  /* Fondo de la página con imagen y overlay - IGUAL QUE LOGIN */
+  /* Aplicar tipografía Inter/Poppins a todo el formulario */
+  body,
+  .register-form {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Aplicar fuente a elementos específicos, pero NO a iconos de Font Awesome */
+  .register-form label,
+  .register-form input,
+  .register-form button,
+  .register-form p,
+  .register-form a,
+  .register-form h1,
+  .register-form h2,
+  .register-form h3,
+  .register-form h4,
+  .register-form h5,
+  .register-form h6,
+  .register-form span,
+  .register-form div,
+  .register-form small {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Asegurar que los iconos de Font Awesome mantengan su fuente */
+  .register-form i,
+  .register-form .fas,
+  .register-form .far,
+  .register-form .fab,
+  .register-form .fa,
+  .register-form [class*="fa-"] {
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+  
+  /* Fondo de la página con gradiente RGB: Negro - Calipso - Blanco */
+  html {
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%) !important;
+    min-height: 100vh !important;
+  }
+  
   body {
-    background: transparent !important;
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%) !important;
+    background-color: transparent !important;
     margin: 0 !important;
     min-height: 100vh !important;
     padding-bottom: 0 !important;
     position: relative;
   }
   
+  /* Asegurar que main y body no tengan fondo blanco */
+  main {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  
   /* Contenedor principal - CENTRADO PERFECTO */
+  body .contenido-principal,
+  main.contenido-principal,
   .contenido-principal {
+    background: transparent !important;
+    background-color: transparent !important;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
     margin: 0;
+  }
+  
+  /* Asegurar que el div de fondo esté detrás de todo */
+  #background-image {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: -999 !important;
+    pointer-events: none !important;
   }
 
   /* Wrapper del formulario - CENTRADO VERTICAL Y HORIZONTAL */
@@ -95,6 +149,7 @@
     margin-bottom: 35px;
     font-weight: bold;
     font-size: 2rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   }
 
   /* Icono del título */
@@ -106,6 +161,15 @@
     text-align: center;
   }
 
+  /* Asegurar que el icono del título se muestre correctamente */
+  .register-icon,
+  .register-icon.fas,
+  .register-icon.fa {
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+  }
+
   /* Labels mejorados */
   .register-form label {
     font-weight: 600;
@@ -113,6 +177,20 @@
     margin-bottom: 10px;
     font-size: 0.95rem;
     display: block;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Iconos dentro de los labels */
+  .register-form label i,
+  .register-form label .fas,
+  .register-form label .fa {
+    margin-right: 8px;
+    color: #3498db;
+    font-size: 1rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
   }
 
   /* INPUTS - EXACTAMENTE EL MISMO TAMAÑO QUE LOGIN */
@@ -141,7 +219,7 @@
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 5px;
-    font-family: inherit;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
     display: block;
     height: auto;
     line-height: 1.5;
@@ -214,6 +292,7 @@
     font-size: 0.875rem;
     color: #dc3545;
     font-weight: 500;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   }
 
   /* Help text para contraseñas */
@@ -223,6 +302,7 @@
     margin-top: 8px;
     line-height: 1.5;
     padding-left: 5px;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   }
 
   .register-form .form-text ul {
@@ -248,6 +328,19 @@
     color: white;
     margin-top: 10px;
     cursor: pointer;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Iconos en botón de registro */
+  .register-btn i,
+  .register-btn .fas,
+  .register-btn .fa {
+    margin-right: 8px;
+    font-size: 1rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
   }
 
   .register-btn:hover {
@@ -273,6 +366,7 @@
     color: #6c757d;
     margin: 0;
     font-size: 0.95rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   }
 
   .login-link a {
@@ -280,6 +374,19 @@
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Iconos en enlaces */
+  .login-link a i,
+  .login-link a .fas,
+  .login-link a .fa {
+    margin-right: 6px;
+    font-size: 0.9rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
   }
 
   .login-link a:hover {
@@ -299,6 +406,19 @@
     border: 2px solid #dee2e6;
     background: white;
     font-size: 0.95rem;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Iconos en botón volver a inicio */
+  .btn-back-home i,
+  .btn-back-home .fas,
+  .btn-back-home .fa {
+    margin-right: 6px;
+    font-size: 0.9rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
   }
 
   .btn-back-home:hover {
@@ -348,6 +468,17 @@
     justify-content: center;
     transition: color 0.3s ease;
     z-index: 10;
+  }
+
+  /* Iconos dentro del botón toggle-password */
+  .toggle-password i,
+  .toggle-password .fas,
+  .toggle-password .fa {
+    font-size: 1.1rem;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 1;
   }
 
   .toggle-password:hover {

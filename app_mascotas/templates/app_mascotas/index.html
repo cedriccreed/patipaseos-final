@@ -59,12 +59,164 @@
 {% endif %}
 
 <!-- ============================================
+     ESTILOS PARA NAVBAR - ELEGANTE, COMPACTO Y ORDENADO
+     ============================================ -->
+<style>
+  /* Importar fuente elegante de Google Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+  
+  /* Forzar gradiente RGB: Negro - Calipso - Blanco en navbar de página de inicio */
+  .home-navbar,
+  nav.home-navbar,
+  .navbar.home-navbar {
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%) !important;
+    background-image: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%) !important;
+    background-color: transparent !important;
+    padding: 12px 0 !important;
+    min-height: 60px !important;
+    max-height: 70px !important;
+  }
+  
+  /* Contenedor con ancho máximo para que no se extienda tanto */
+  .home-navbar .container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 30px !important;
+  }
+  
+  /* Logo más compacto y elegante */
+  .home-navbar .navbar-brand {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .home-navbar .navbar-brand img {
+    height: 40px !important;
+    width: auto !important;
+    max-width: 150px !important;
+  }
+  
+  /* ENLACES SOLO TEXTO - SIN FONDOS - CON EFECTO HOVER ELEGANTE */
+  .home-navbar .navbar-nav .nav-item {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  .home-navbar .nav-link,
+  .home-navbar .navbar-nav .nav-item .nav-link,
+  .home-navbar .navbar-nav .nav-link,
+  .home-navbar a.nav-link {
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 8px 18px !important;
+    margin: 0 8px !important;
+    border-radius: 0 !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    position: relative !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.3px !important;
+    text-transform: none !important;
+  }
+  
+  /* Ocultar iconos en enlaces para diseño más limpio */
+  .home-navbar .nav-link i {
+    display: none !important;
+  }
+  
+  /* EFECTO HOVER ELEGANTE - SUBRAYADO ANIMADO */
+  .home-navbar .nav-link::after,
+  .home-navbar .navbar-nav .nav-item .nav-link::after {
+    content: '' !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 2px !important;
+    bottom: 4px !important;
+    left: 50% !important;
+    background-color: #ffffff !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transform: translateX(-50%) !important;
+    border-radius: 2px !important;
+  }
+  
+  .home-navbar .nav-link:hover,
+  .home-navbar .navbar-nav .nav-item .nav-link:hover {
+    color: #ffffff !important;
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    transform: translateY(-1px) !important;
+  }
+  
+  .home-navbar .nav-link:hover::after,
+  .home-navbar .navbar-nav .nav-item .nav-link:hover::after {
+    width: calc(100% - 36px) !important;
+  }
+  
+  .home-navbar .nav-link:active,
+  .home-navbar .nav-link:focus {
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  
+  /* Menú de navegación centrado - más compacto */
+  .home-navbar .navbar-collapse {
+    flex-grow: 0 !important;
+  }
+  
+  .home-navbar .navbar-nav {
+    gap: 0 !important;
+  }
+  
+  /* Responsive para tablets */
+  @media (max-width: 991px) {
+    .home-navbar .container {
+      padding: 0 20px !important;
+    }
+    
+    .home-navbar {
+      padding: 10px 0 !important;
+      min-height: 55px !important;
+    }
+  }
+  
+  /* Responsive para móviles */
+  @media (max-width: 768px) {
+    .home-navbar .nav-link {
+      padding: 10px 15px !important;
+      margin: 0 !important;
+      font-size: 0.9rem !important;
+    }
+  }
+</style>
+
+<!-- ============================================
      SECCIÓN DE SERVICIOS - DISEÑO ELEGANTE Y CONSISTENTE
      ============================================ -->
 <style>
+  /* Aplicar tipografía elegante a toda la página de inicio */
+  body {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  }
+  
   .services-section {
     padding: 80px 0 60px 0;
     background: #ffffff;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .services-title {
@@ -74,6 +226,7 @@
     margin-bottom: 60px;
     letter-spacing: 1px;
     text-align: center;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .service-card {
@@ -96,7 +249,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #87CEEB 0%, #708090 100%);
+    background: linear-gradient(90deg, #000000 0%, #00CED1 50%, #ffffff 100%);
     transform: scaleX(0);
     transition: transform 0.4s ease;
   }
@@ -107,12 +260,12 @@
   
   .service-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    border-color: #87CEEB;
+    box-shadow: 0 15px 40px rgba(0, 206, 209, 0.2);
+    border-color: #00CED1;
   }
   
   .service-card-header {
-    background: linear-gradient(135deg, #87CEEB 0%, #ffffff 50%, #708090 100%);
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%);
     color: #2c3e50;
     padding: 25px 20px;
     text-align: center;
@@ -124,6 +277,7 @@
     font-weight: 600;
     margin-bottom: 10px;
     color: #2c3e50;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .service-card-header .service-price {
@@ -131,6 +285,7 @@
     font-weight: 700;
     color: #2c3e50;
     margin: 0;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .service-card-body {
@@ -155,8 +310,8 @@
   
   .service-card:hover .service-avatar {
     transform: scale(1.05);
-    border-color: #87CEEB;
-    box-shadow: 0 6px 20px rgba(135, 206, 235, 0.3);
+    border-color: #00CED1;
+    box-shadow: 0 6px 20px rgba(0, 206, 209, 0.3);
   }
   
   .service-avatar img {
@@ -171,6 +326,7 @@
     line-height: 1.7;
     margin-bottom: 20px;
     flex-grow: 1;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .service-card-footer {
@@ -181,7 +337,7 @@
   }
   
   .service-btn {
-    background: linear-gradient(135deg, #87CEEB 0%, #708090 100%);
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%);
     color: #ffffff;
     border: none;
     padding: 12px 30px;
@@ -192,13 +348,14 @@
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
-    box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 206, 209, 0.3);
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .service-btn:hover {
-    background: linear-gradient(135deg, #708090 0%, #87CEEB 100%);
+    background: linear-gradient(135deg, #00CED1 0%, #000000 50%, #ffffff 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(135, 206, 235, 0.4);
+    box-shadow: 0 6px 20px rgba(0, 206, 209, 0.4);
     color: #ffffff;
     text-decoration: none;
   }
@@ -208,11 +365,12 @@
     font-size: 0.9rem;
     margin-top: 15px;
     margin-bottom: 0;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .service-author i {
     margin-right: 5px;
-    color: #87CEEB;
+    color: #00CED1;
   }
   
   .no-services-alert {
@@ -227,11 +385,13 @@
     color: #2c3e50;
     font-weight: 600;
     margin-bottom: 15px;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .no-services-alert p {
     color: #6c757d;
     margin: 0;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .pagination {
@@ -239,26 +399,27 @@
   }
   
   .pagination .page-link {
-    color: #87CEEB;
+    color: #00CED1;
     border: 1px solid #e9ecef;
     padding: 10px 15px;
     margin: 0 3px;
     border-radius: 8px;
     transition: all 0.3s ease;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .pagination .page-link:hover {
-    background: #87CEEB;
+    background: #00CED1;
     color: #ffffff;
-    border-color: #87CEEB;
+    border-color: #00CED1;
     transform: translateY(-2px);
   }
   
   .pagination .page-item.active .page-link {
-    background: linear-gradient(135deg, #87CEEB 0%, #708090 100%);
-    border-color: #87CEEB;
+    background: linear-gradient(135deg, #000000 0%, #00CED1 50%, #ffffff 100%);
+    border-color: #00CED1;
     color: #ffffff;
-    box-shadow: 0 4px 15px rgba(135, 206, 235, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 206, 209, 0.3);
   }
   
   @media (max-width: 768px) {
@@ -291,7 +452,7 @@
   <div class="container">
     <h2 class="services-title animate__animated animate__fadeInDown">Publicación de Servicios</h2>
     
-    <div class="row">
+    <div class="row justify-content-center">
         {% for servicio in obtener %}
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="service-card animate__animated animate__fadeInUp">
@@ -375,7 +536,7 @@
 <div class="services-section">
   <div class="container">
     <div class="alert no-services-alert text-center">
-      <i class="fas fa-search fa-3x mb-3" style="color: #87CEEB;"></i>
+      <i class="fas fa-search fa-3x mb-3" style="color: #00CED1;"></i>
       <h4>No se encontraron servicios</h4>
       <p>Intenta buscar con otros términos o revisa más tarde.</p>
     </div>
@@ -420,6 +581,7 @@
     color: #2c3e50;
     margin-bottom: 10px;
     letter-spacing: 1px;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .features-subtitle {
@@ -428,6 +590,7 @@
     color: #6c757d;
     margin-bottom: 60px;
     letter-spacing: 0.5px;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .feature-card {
@@ -450,7 +613,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #87CEEB 0%, #708090 100%);
+    background: linear-gradient(90deg, #000000 0%, #00CED1 50%, #ffffff 100%);
     transform: scaleX(0);
     transition: transform 0.4s ease;
   }
@@ -461,8 +624,8 @@
   
   .feature-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    border-color: #87CEEB;
+    box-shadow: 0 15px 40px rgba(0, 206, 209, 0.2);
+    border-color: #00CED1;
   }
   
   .feature-icon {
@@ -477,19 +640,19 @@
   }
   
   .feature-icon.verified {
-    color: #87CEEB;
+    color: #00CED1;
   }
   
   .feature-icon.veterinary {
-    color: #708090;
+    color: #000000;
   }
   
   .feature-icon.happy {
-    color: #87CEEB;
+    color: #00CED1;
   }
   
   .feature-icon.tracking {
-    color: #708090;
+    color: #000000;
   }
   
   .feature-card h3 {
@@ -497,6 +660,7 @@
     font-weight: 600;
     color: #2c3e50;
     margin-bottom: 15px;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .feature-card p {
@@ -504,6 +668,7 @@
     color: #6c757d;
     line-height: 1.7;
     margin: 0;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
   .features-icons-section {
@@ -522,7 +687,7 @@
   
   .feature-pet-icon {
     font-size: 4rem;
-    color: #87CEEB;
+    color: #00CED1;
     transition: all 0.3s ease;
     animation: float 3s ease-in-out infinite;
   }
@@ -533,17 +698,17 @@
   
   .feature-pet-icon:nth-child(2) {
     animation-delay: 0.5s;
-    color: #708090;
+    color: #000000;
   }
   
   .feature-pet-icon:nth-child(3) {
     animation-delay: 1s;
-    color: #87CEEB;
+    color: #00CED1;
   }
   
   .feature-pet-icon:hover {
     transform: scale(1.2) rotate(10deg);
-    color: #87CEEB;
+    color: #00CED1;
   }
   
   @keyframes float {
@@ -587,8 +752,8 @@
 <div class="features-section">
   <div class="container">
     <div class="text-center mb-5">
-      <h1 class="features-title animate__animated animate__fadeInDown">PATIPASEO TE OFRECE</h1>
-      <h2 class="features-subtitle animate__animated animate__fadeInDown">RAZONES PRINCIPALES</h2>
+      <h1 class="features-title animate__animated animate__fadeInDown"><strong>Pati</strong>Paseos Te Ofrece</h1>
+      <h2 class="features-subtitle animate__animated animate__fadeInDown">Razones Principales</h2>
     </div>
     
     <div class="row">

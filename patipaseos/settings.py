@@ -137,12 +137,13 @@ AUTHENTICATION_BACKENDS = [
 
 AUTH_USER_MODEL = "app_mascotas.Propietario"
 
+# Configuración de Email - SMTP Gmail
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'gumartinezb9@gmail.com'
-EMAIL_HOST_PASSWORD = 'wxrz qvcx tbbc mfml'
+EMAIL_HOST_USER = 'cedricdeadmau5@gmail.com'
+EMAIL_HOST_PASSWORD = 'wgnhyrfhrsowqple'  # Contraseña de aplicación de Gmail
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
