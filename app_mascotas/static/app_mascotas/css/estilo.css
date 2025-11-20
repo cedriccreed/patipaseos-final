@@ -369,13 +369,14 @@ body .home-navbar {
     text-align: center;
     margin-top: 0;
     padding-top: 0;
-    padding-bottom: 180px !important; /* Padding igual a la altura del footer para reservar espacio */
+    padding-bottom: 0 !important; /* Sin padding para que el footer se pegue */
     margin-bottom: 0 !important;
     position: relative;
     background: #ffffff;
     overflow: visible;
     min-height: calc(100vh - 180px) !important;
     box-sizing: border-box !important;
+    flex: 1 0 auto; /* Permitir que crezca pero no se encoja */
 }
 
 /* Eliminar cualquier espacio entre contenido y footer */
@@ -408,6 +409,8 @@ main.contenido-principal + footer {
 /* Asegurar que no haya gap en el flex container */
 body {
     gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 /* Eliminar cualquier espacio del último elemento dentro del main */
@@ -415,6 +418,17 @@ main.contenido-principal > div:last-child,
 main.contenido-principal > section:last-child {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
+}
+
+/* Eliminar espacio blanco entre contenido y footer */
+main.contenido-principal {
+    margin-bottom: 0 !important;
+}
+
+/* Asegurar que el footer se pegue directamente al contenido */
+footer {
+    margin-top: 0 !important;
+    padding-top: 40px !important;
 }
 
 /* Ajuste cuando no hay navbar (páginas de login/registro) */
@@ -726,25 +740,54 @@ footer {
 }
 
 /* Asegurar que todos los elementos del footer usen la tipografía correcta */
-footer *,
 footer p,
 footer span,
 footer div,
-footer a,
 footer strong {
     font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
 
-/* Excepción para iconos de Font Awesome */
+/* Excepción: los enlaces NO deben tener la fuente forzada si contienen iconos */
+footer a:not([class*="fa-"]):not(:has(i)) {
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* Excepción para iconos de Font Awesome - DEBE IR ANTES DE OTRAS REGLAS */
 footer i,
 footer .fas,
 footer .far,
 footer .fab,
 footer .fa,
-footer [class*="fa-"] {
+footer [class*="fa-"],
+footer a i,
+footer a .fab,
+footer a .fas,
+footer a .far {
+    font-family: "Font Awesome 5 Brands", "Font Awesome 5 Free" !important;
+    font-weight: 400 !important; /* Brands usa 400, Free usa 900 */
+    font-style: normal !important;
+    display: inline-block !important;
+    font-size: inherit !important;
+    line-height: 1 !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Específico para iconos de marcas (Brands) - ALTA PRIORIDAD */
+footer .fab,
+footer a .fab,
+footer i.fab {
+    font-family: "Font Awesome 5 Brands" !important;
+    font-weight: 400 !important;
+}
+
+/* Específico para iconos sólidos (Free) */
+footer .fas,
+footer a .fas,
+footer i.fas {
     font-family: "Font Awesome 5 Free" !important;
     font-weight: 900 !important;
-    font-style: normal !important;
 }
 
 /* Lista de enlaces sociales */
@@ -763,21 +806,87 @@ footer [class*="fa-"] {
     margin: 0 var(--spacing-sm);
 }
 
-/* Enlaces sociales con efecto RGB */
+/* Enlaces sociales - LIMPIOS SIN FONDO */
 .social-links a {
-    color: white;
+    color: white !important;
     text-decoration: none;
-    transition: transform var(--transition-normal), color var(--transition-normal), filter var(--transition-normal);
+    transition: transform var(--transition-normal), color var(--transition-normal);
     display: inline-block;
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    filter: none !important;
 }
 
-/* Efecto hover en iconos sociales con RGB */
+/* Asegurar que los iconos dentro de los enlaces se muestren - LIMPIOS SIN FONDO */
+.social-links a i,
+.social-links a .fab,
+.social-links a .fas,
+.social-links .fab,
+.social-links .fas,
+.social-links i.fab,
+.social-links i.fas,
+footer .social-links a i,
+footer .social-links a .fab,
+footer .social-links a .fas {
+    display: inline-block !important;
+    font-size: 2.5rem !important; /* Iconos más grandes */
+    line-height: 1 !important;
+    color: white !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    font-family: "Font Awesome 5 Brands", "Font Awesome 5 Free" !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    speak: none !important;
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    text-shadow: none !important;
+    outline: none !important;
+}
+
+/* Específico para iconos de marcas en enlaces sociales - MÁXIMA ESPECIFICIDAD */
+.social-links .fab,
+.social-links a .fab,
+.social-links i.fab,
+footer .social-links .fab,
+footer .social-links a .fab,
+footer .social-links i.fab {
+    font-family: "Font Awesome 5 Brands" !important;
+    font-weight: 400 !important;
+}
+
+/* Efecto hover en iconos sociales - LIMPIO SIN FONDO */
 .social-links a:hover {
-    color: #ffffff;
-    transform: scale(1.3);
-    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 25px rgba(128, 128, 128, 0.5));
-    animation: footerRgbBorder 2s ease infinite;
+    color: #ffffff !important;
+    transform: scale(1.15);
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    animation: none !important;
+    text-shadow: none !important;
+    outline: none !important;
+}
+
+/* Asegurar que los enlaces no tengan ningún efecto visual adicional */
+.social-links a:focus,
+.social-links a:active {
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    outline: none !important;
+    text-shadow: none !important;
 }
 
 /* Texto de copyright con efecto RGB - Sin línea divisoria */

@@ -19,9 +19,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Favicon - Redirige a la imagen del logo
+    path('favicon.ico', RedirectView.as_view(url='/static/app_mascotas/img/patipaseospng.png', permanent=True)),
     path('', include("app_mascotas.urls")),
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="registration/password_reset.html"), name='reset_password'),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="registration/reset_done.html"), name='password_reset_done'),

@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.http import HttpResponseBadRequest
-from django.db import connection
 from django.utils import timezone
 
 # Create your views here.
@@ -752,28 +751,96 @@ def editar_cuidador(request,id_cuidador):
 
 
 
-def dictfetchall(cursor):
-    columns = [col[0] for col in cursor.description]
-    return [dict(zip(columns, row)) for row in cursor.fetchall()]
-
-
 def obtener_mascotas_activas(propietario_id):
-    with connection.cursor() as cursor:
-        cursor.callproc('ObtenerMascotasActivasConDetalle', [propietario_id])
-        mascotas_activas = dictfetchall(cursor)
+    """
+    Obtiene las mascotas activas de un propietario con sus detalles relacionados.
+    Reemplaza el procedimiento almacenado con consultas del ORM de Django.
+    """
+    mascotas = Mascota.objects.filter(
+        propietario_id=propietario_id,
+        es_activo=True
+    ).select_related('id_raza', 'id_raza__id_especie', 'propietario')
+    
+    # Convertir a lista de diccionarios para mantener compatibilidad
+    mascotas_activas = []
+    for mascota in mascotas:
+        mascotas_activas.append({
+            'id_mascota': mascota.id_mascota,
+            'nombre_mascota': mascota.nombre_mascota,
+            'peso': float(mascota.peso),
+            'pelaje': mascota.pelaje,
+            'observaciones': mascota.observaciones,
+            'es_activo': mascota.es_activo,
+            'propietario_id': mascota.propietario_id,
+            'id_raza': mascota.id_raza_id,
+            'raza_mascota': mascota.id_raza.raza_mascota if mascota.id_raza else None,
+            'id_especie': mascota.id_raza.id_especie_id if mascota.id_raza else None,
+            'especie_mascota': mascota.id_raza.id_especie.especie_mascota if mascota.id_raza and mascota.id_raza.id_especie else None,
+        })
+    
     return mascotas_activas
 
 def obtener_servicios_activos(propietario_id):
-    with connection.cursor() as cursor:
-        cursor.callproc('ObtenerServiciosActivosConDetalle', [propietario_id])
-        servicios_activos = dictfetchall(cursor)
-
+    """
+    Obtiene los servicios activos de un propietario (cuidador) con sus detalles relacionados.
+    Reemplaza el procedimiento almacenado con consultas del ORM de Django.
+    """
+    # Obtener el cuidador del propietario
+    try:
+        cuidador = Cuidador.objects.get(propietario_id=propietario_id)
+    except Cuidador.DoesNotExist:
+        return []
+    
+    servicios = Servicio.objects.filter(
+        cuidador=cuidador,
+        es_activo=True
+    ).select_related('tipo_servicio', 'cuidador', 'cuidador__propietario')
+    
+    # Convertir a lista de diccionarios para mantener compatibilidad
+    servicios_activos = []
+    for servicio in servicios:
+        servicios_activos.append({
+            'id_servicio': servicio.id_servicio,
+            'descripcion': servicio.descripcion,
+            'precio': servicio.precio,
+            'es_activo': servicio.es_activo,
+            'cuidador_id': servicio.cuidador_id,
+            'tipo_servicio_id': servicio.tipo_servicio_id,
+            'tipo_servicio': servicio.tipo_servicio.tipo_servicio if servicio.tipo_servicio else None,
+            'cuidador_username': servicio.cuidador.propietario.username if servicio.cuidador and servicio.cuidador.propietario else None,
+        })
+    
     return servicios_activos
 
 
 def obtener_resenas_por_propietario_cuidador(propietario_id):
-    with connection.cursor() as cursor:
-        cursor.callproc('ObtenerResenasPorPropietarioCuidador', [propietario_id])
-        resenas_por_cuidador = dictfetchall(cursor)
-
+    """
+    Obtiene las reseñas de un cuidador por propietario.
+    Reemplaza el procedimiento almacenado con consultas del ORM de Django.
+    """
+    # Obtener el cuidador del propietario
+    try:
+        cuidador = Cuidador.objects.get(propietario_id=propietario_id)
+    except Cuidador.DoesNotExist:
+        return []
+    
+    resenas = Resena.objects.filter(
+        cuidador=cuidador
+    ).select_related('autor', 'cuidador', 'cuidador__propietario').order_by('-fecha_creacion')
+    
+    # Convertir a lista de diccionarios para mantener compatibilidad
+    resenas_por_cuidador = []
+    for resena in resenas:
+        resenas_por_cuidador.append({
+            'id': resena.id,
+            'texto': resena.texto,
+            'calificacion': resena.calificacion,
+            'fecha_creacion': resena.fecha_creacion,
+            'fue_editada': resena.fue_editada,
+            'autor_id': resena.autor_id,
+            'autor_username': resena.autor.username if resena.autor else None,
+            'cuidador_id': resena.cuidador_id,
+            'cuidador_username': resena.cuidador.propietario.username if resena.cuidador and resena.cuidador.propietario else None,
+        })
+    
     return resenas_por_cuidador

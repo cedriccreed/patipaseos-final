@@ -1,0 +1,32 @@
+{
+  "name": "patipaseos",
+  "version": "1.0.0",
+  "description": "PatiPaseos - Plataforma para conectar propietarios de mascotas con cuidadores profesionales",
+  "main": "index.js",
+  "scripts": {
+    "install-assets": "node scripts/copy-assets.js",
+    "download-fonts": "node scripts/download-fonts.js",
+    "postinstall": "npm run install-assets && npm run download-fonts"
+  },
+  "keywords": [
+    "django",
+    "bootstrap",
+    "frontend"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "animate.css": "^4.1.1",
+    "bootstrap": "^4.5.2",
+    "chart.js": "^3.9.1",
+    "daterangepicker": "^3.1.0",
+    "jquery": "^3.6.0",
+    "moment": "^2.29.4",
+    "popper.js": "^1.16.0",
+    "sweetalert2": "^11.26.3"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.1.1"
+  }
+}

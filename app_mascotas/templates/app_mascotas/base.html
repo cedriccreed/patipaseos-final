@@ -6,29 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="PatiPaseos - Plataforma para conectar propietarios de mascotas con cuidadores profesionales">
     
+    <!-- Favicon - Icono de la pestaña del navegador -->
+    <link rel="icon" type="image/png" href="{% static 'app_mascotas/img/patipaseospng.png' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'app_mascotas/img/patipaseospng.png' %}">
+    
     <!-- ============================================
-         HOJAS DE ESTILO EXTERNAS (CDN)
+         HOJAS DE ESTILO (ARCHIVOS LOCALES)
          ============================================ -->
     
-    <!-- Google Fonts - Tipografía elegante (Inter y Poppins) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fuentes locales - Inter y Poppins -->
+    <link rel="stylesheet" href="{% static 'app_mascotas/css/fonts.css' %}">
     
     <!-- Bootstrap 4.5.2 CSS - Framework CSS principal para diseño responsive -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'app_mascotas/css/bootstrap.min.css' %}">
     
     <!-- Font Awesome 5.15.3 - Librería de iconos vectoriales -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'app_mascotas/css/fontawesome.min.css' %}">
     
     <!-- Animate.css 4.1.1 - Librería de animaciones CSS predefinidas -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="{% static 'app_mascotas/css/animate.min.css' %}">
     
     <!-- DateRangePicker CSS - Estilos para el selector de rangos de fechas -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app_mascotas/css/daterangepicker.css' %}" />
+    
+    <!-- SweetAlert2 CSS - Estilos para alertas modernas -->
+    <link rel="stylesheet" href="{% static 'app_mascotas/css/sweetalert2.min.css' %}">
     
     <!-- Hoja de estilos personalizada del proyecto -->
     <link rel="stylesheet" href="{% static 'app_mascotas/css/estilo.css' %}">
+    
+    <!-- Bloque para estilos adicionales de templates hijos -->
+    {% block extra_css %}{% endblock %}
     
     <!-- Título de la página (puede ser sobrescrito en templates hijos) -->
     <title>{% block title %}PatiPaseos - Cuidadores Profesionales para Mascotas{% endblock %}</title>
@@ -188,30 +196,30 @@
     </footer>
 
     <!-- ============================================
-         SCRIPTS JAVASCRIPT (CDN)
+         SCRIPTS JAVASCRIPT (ARCHIVOS LOCALES)
          IMPORTANTE: Orden de carga es crítico
          ============================================ -->
     
     <!-- jQuery 3.6.0 - Librería JavaScript base (requerida por Bootstrap y otros plugins) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'app_mascotas/js/jquery.min.js' %}"></script>
     
     <!-- Popper.js 1.16.0 - Requerido por Bootstrap para tooltips y popovers -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="{% static 'app_mascotas/js/popper.min.js' %}"></script>
     
     <!-- Bootstrap 4.5.2 JS - Funcionalidades JavaScript de Bootstrap (modales, dropdowns, etc.) -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'app_mascotas/js/bootstrap.bundle.min.js' %}"></script>
     
     <!-- Moment.js - Librería para manejo y formateo de fechas -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="{% static 'app_mascotas/js/moment.min.js' %}"></script>
     
     <!-- DateRangePicker - Plugin para selección de rangos de fechas -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript" src="{% static 'app_mascotas/js/daterangepicker.js' %}"></script>
     
     <!-- Chart.js - Librería para crear gráficos y visualizaciones de datos -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'app_mascotas/js/chart.min.js' %}"></script>
     
     <!-- SweetAlert2 - Librería para alertas y modales modernos y personalizables -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{% static 'app_mascotas/js/sweetalert2.min.js' %}"></script>
 
     <!-- ============================================
          SCRIPTS PERSONALIZADOS
